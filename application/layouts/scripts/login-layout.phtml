@@ -1,0 +1,29 @@
+<!DOCTYPE html> 
+<?php include PORTABLE_PHTML; ?>
+<html> 
+<head> 
+    <?php include 'layout-head.phtml'; ?>
+    <script src="<?=$app_path?>/js/liquid-canvas/0.3/liquid-canvas.js"></script>
+    <script src="<?=$app_path?>/js/liquid-canvas/0.3/liquid-canvas-plugins.js"></script>
+</head>
+<body>
+    <?=$this->layout()->content?>
+
+    <div id="footer" style="padding-top: 2%">
+        <?php include 'layout-foot.phtml'; ?></div>
+
+    <script type="text/javascript">
+    $(document).ready(function(){ 
+        $('.rounded').each(function(){
+            if(!$(this).data("already_rounded")){
+                var radius=($(this).attr("data-radius")||"25");
+                var border_color=($(this).css("border-top-color")||"#6c90be");
+                var background_color=($(this).css("background-color")||"#fff");
+                $(this).liquidCanvas("[shadow{width:3;shift:1;color:rgba(000,000,000,0.20);} border{color:"+border_color+"; width:2;} fill{color:"+background_color+"}] => roundedRect{radius:"+radius+"}")
+            }
+            $(this).data("already_rounded",true)
+        });        
+    });
+    </script>    
+</body>
+</html>

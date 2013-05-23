@@ -1,0 +1,55 @@
+                        <div class="application_connect" title="<?=$viewData->appType->longName?>" 
+                             style="display:none">
+                            <table class="properties">
+                                <tbody><tr>
+                                        <td rowspan="3">
+                                            <img src="<?=$app_images->appImagePath.'/'.
+                                                            $viewData->appType->logoFilename?>"
+                                                 alt="inFusion-stack-wordpress">
+                                        </td>
+                                        <td colspan="2">
+                                            Credentials for <?=$viewData->appType->shortName?>:
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Username</th>
+                                        <td>
+                                            <?=$viewData->serverRec->appLogin?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th valign="top">Password</th>
+                                        <td valign="top" style="color:#333">
+                                            <span style="display:none; white-space: nowrap;" class="password_toggle">
+                                                <?=$viewData->serverRec->appPassword?>
+                                                <object width="110" height="14" id="clippy" 
+                                                        classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+                                                    <param value="<?=$app_path?>/assets/clippy.swf" name="movie">
+                                                    <param value="opaque" name="wmode">
+                                                    <param value="always" name="allowScriptAccess">
+                                                    <param value="high" name="quality">
+                                                    <param value="noscale" name="scale">
+                                                    <param value="text=<?=$viewData->serverRec->appPassword?>" 
+                                                           name="FlashVars">
+                                                    <param value="#FFFFFF" name="bgcolor">
+                                                    <embed width="110" height="14" bgcolor="#FFFFFF" 
+                                                           flashvars="text=P%2BB%25Wm8eDY7-" 
+                                                           pluginspage="http://www.macromedia.com/go/getflashplayer" 
+                                                           type="application/x-shockwave-flash" allowscriptaccess="always" 
+                                                           quality="high" wmode="opaque" name="clippy" src="<?=$app_path?>/assets/clippy.swf">
+                                                </object>
+
+                                            </span>
+                                            <span class="password_toggle">
+                                                ********
+                                                <a onclick="$(this).closest('td').children('.password_toggle').toggle(); return false;" href="#">show</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                            <p>
+                                Learn more about this application in the <a target="_blank" href="#" myhref="http://www.infusionappdev.com/Applications/inFusion_WordPress">inFusion Wiki</a>
+                            </p>
+                        </div>
+                                
+<?php include 'app-connect-dialog-js.phtml'; ?>

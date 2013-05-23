@@ -1,0 +1,178 @@
+    <h2 class="header">Navigation</h2>
+    <div id="left_menu" class="ui-layout-content" 
+         style="padding: 0px 10px;">
+        <br />
+        <!-- setting selected link through jquery -- may not work because because of app_path
+        <script>
+            $(document).ready(function() {
+                var path = document.location.pathname;
+                path = path.replace("<?=$app_path?>" + "/", "");
+                $(".nav_links a").each(function() {
+                    var href = $(this).attr("href");
+                    if (href == ".") href = "";
+                    if (href == path) $(this).addClass("selected");
+                });
+            });
+        </script>
+        -->
+        <ul type="none" class="nav_links">
+            <li>
+                <a <?=$this->hrefAndSelected('')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/application_view_tile.png" alt="Application_view_tile">
+                Dashboard</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('news')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/newspaper.png" alt="Newspaper">
+                News</a>
+            </li>
+        </ul>
+        <h3>
+            SERVERS
+            <hr>
+        </h3>
+        <ul type="none" class="nav_links">
+            <li>
+                <a <?=$this->hrefAndSelected('servers')?> >
+                <!--a <?//$this->hrefAndSelectedTemp('servers', 'servers')?> -->
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/server.png" alt="Server">
+                Servers</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('backups')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/drive_key.png" alt="Drive_key">
+                Backups</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('monitoring','monitoring')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/chart_bar.png" alt="Chart_bar">
+                Monitoring</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('scheduling')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/calendar.png" alt="Calendar">
+                Scheduling</a>
+            </li>
+        </ul>
+        <h3>
+            CLOUDS
+            <hr>
+        </h3>
+        <ul type="none" class="nav_links">
+            <li>
+                <a <?=$this->hrefAndSelected('clouds')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/weather_clouds.png" alt="Weather_clouds">
+                Manage</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('servers/import')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/server_add.png" alt="Server_add">
+                Import Servers</a>
+            </li>
+        </ul>
+        <h3>
+            SETTINGS
+            <hr>
+        </h3>
+        <ul type="none" class="nav_links">
+            <li>
+                <a <?=$this->hrefAndSelected('account/user')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/user.png" alt="User">
+                User</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('account/billing')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/creditcards.png" alt="Creditcards">
+                Billing</a>
+            </li>
+        </ul>
+    <h2 class="header">Another Nav</h2>
+        <br />
+        <!-- setting selected link through jquery -- may not work because because of app_path
+        <script>
+            $(document).ready(function() {
+                var path = document.location.pathname;
+                path = path.replace("<?=$app_path?>" + "/", "");
+                $(".nav_links a").each(function() {
+                    var href = $(this).attr("href");
+                    if (href == ".") href = "";
+                    if (href == path) $(this).addClass("selected");
+                });
+            });
+        </script>
+        -->
+        <ul type="none" class="nav_links">
+            <li>
+                <a <?=$this->hrefAndSelected('')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/application_view_tile.png" alt="Application_view_tile">
+                Dashboard</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('news')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/newspaper.png" alt="Newspaper">
+                News</a>
+            </li>
+        </ul>
+        <script>
+            $(document).ready(function() {
+                $("#nav_accordion").accordion();
+            });
+        </script>
+        <div id="nav_accordion">
+        <h3>
+            SERVERS
+        </h3>
+        <ul type="none">
+            <li>
+                <a <?=$this->hrefAndSelected('servers')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/server.png" alt="Server">
+                Servers</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('backups')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/drive_key.png" alt="Drive_key">
+                Backups</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('monitoring')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/chart_bar.png" alt="Chart_bar">
+                Monitoring</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('scheduling')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/calendar.png" alt="Calendar">
+                Scheduling</a>
+            </li>
+        </ul>
+        <h3>
+            CLOUDS
+        </h3>
+        <ul type="none">
+            <li>
+                <a <?=$this->hrefAndSelected('clouds')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/weather_clouds.png" alt="Weather_clouds">
+                Manage</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('servers/import')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/server_add.png" alt="Server_add">
+                Import Servers</a>
+            </li>
+        </ul>
+        <h3>
+            SETTINGS
+        </h3>
+        <ul type="none">
+            <li>
+                <a <?=$this->hrefAndSelected('account/user')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/user.png" alt="User">
+                User</a>
+            </li>
+            <li>
+                <a <?=$this->hrefAndSelected('account/billing')?> >
+                <img valign="middle" src="<?=$app_path?>/images/fff-icons/creditcards.png" alt="Creditcards">
+                Billing</a>
+            </li>
+        </ul>
+        </div>
+    </div>

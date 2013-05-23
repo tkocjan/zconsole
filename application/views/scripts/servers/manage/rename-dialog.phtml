@@ -1,0 +1,227 @@
+<form title="Rename Server" width="600" method="post" 
+    id="rename_server_form" style="display: none" class="edit_server" 
+    action="/servers/14965" accept-charset="UTF-8">
+    <div class="error" style="display:none"><span></span></div>
+    <div style="margin:0;padding:0;display:inline">
+        <p>Please modify the server name below</p>
+        <input type="hidden" value="14965" name="server[id]" id="server_id" />
+        <table style="width: 100%" class="properties">
+            <tbody><tr style="vertical-align: top;">
+                    <th style="width: 120px;">
+                        <label for="serverName">Name</label></th>
+                    <td>
+                        <input type="text" value="<?=$viewData->serverRec->serverName?>" 
+                            name="serverName" id="serverName" size="40"
+                            title=""
+                            class="ui-widget-content ui-corner-all"
+                            type="text" required="" />
+                        <img title="One line description of the server, it must be unique." 
+                            src="<?=$app_images->helpIcon?>" /></td>
+                </tr>
+                <tr style="vertical-align: top;">
+                    <th>
+                        <label for="publicDNS">Domain Name</label></th>
+                    <td>
+                        <input type="text" value="<?=$viewData->serverRec->publicDNS?>" 
+                            id="publicDNS" size="40" name="publicDNS" 
+                            title=""
+                            class="ui-widget-content ui-corner-all"
+                            type="text" required="" />
+                        <?=DNS_ZONE?>
+                        <img title="Please choose your Domain Name." 
+                            src="<?=$app_images->helpIcon?>" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+<script>
+    var errorClassName = "error";
+    var validClassName = "valid";
+    var loadingClassName = "ui-icon-loading";
+//    var jqFields = $(":text", "#rename_server_form");
+//    var jqlabels = $("label[for]", "#rename_server_form");
+    var jqFields = $("#rename_server_form :text");
+    var jqLabels = $("#rename_server_form label[for]");
+    var jqForm = $("#rename_server_form");
+
+    //$(".rename_server_link").on('click', function(event){
+    function renameDialog() {
+        jqForm[0].reset();
+        jqFields.addClass(validClassName).removeClass(errorClassName).removeClass(loadingClassName)
+            .attr("title", "");
+        jqLabels.removeClass(errorClassName);
+        jqForm.dialog({
+            width: 700,
+            modal: true,
+            buttons: {
+                "Cancel": function() {jqForm.dialog("destroy");},
+                "Ok": waitCheckName
+            }
+        });
+
+        /*
+        function cancelDialog(){
+        
+        }
+        */
+        
+        var secs=0, maxSecs=5;
+        function waitCheckName(){
+            //if (!jqForm.dialog("isOpen")) { // causes exception... which is kind of ok
+            //if form destroyed
+            if ( !jqForm.is(':data(dialog)') ) {
+                secs=0;
+                alert("Form canceled!");
+                return;
+            }
+            //jqForm.dialog("disable");
+            //if done loading
+            if (!jqFields.hasClass(loadingClassName)) {
+                secs=0;
+                checkAndUpdateNames();
+                return;
+            }
+            secs++;
+
+            //if max reached
+            if (secs >= maxSecs) {
+                secs=0;
+                alert("Timed out waiting for server!");
+                //jqForm.dialog("enable");
+                return;
+            }
+            //max has not been reached, set another timeout
+            setTimeout(waitCheckName, 1000);
+        }
+        
+        function checkAndUpdateNames(){
+            //if any field errors
+            if (jqFields.hasClass(errorClassName) ) {
+                alert("Please correct the errors on this form!");
+                //jqForm.dialog("enable");
+                return;
+            }
+            console.log("Form OK!");
+
+            jqServerName = $("#serverName");
+            jqPublicDNS = $("#publicDNS");
+            if ( jqServerName.val() == jqServerName[0].defaultValue &&
+                 jqPublicDNS.val() == jqPublicDNS[0].defaultValue ) {
+                jqForm.dialog("destroy");
+                return;
+            }
+            
+            jWaiting(		
+                'Renaming Server...',
+		{
+		  autoHide : false, // added in v2.0
+		  clickOverlay : false, // added in v2.0
+		  HorizontalPosition : 'center',
+		  VerticalPosition : 'center',
+		  ShowOverlay : true
+                }
+            );
+            
+            $.ajax({
+                type: "post",
+                url: "<?=$app_path?>/ajax/update-names",
+                data: {
+                    serverId: "<?=$viewData->serverRec->id?>",
+                    serverName: jqServerName.val(),
+                    publicDNS: jqPublicDNS.val()
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data.success != true)
+                        alert("updateNames failed!")
+                    location.reload(true);
+                },
+                failure: function() {
+                    alert("Ajax updateNames failure");
+                    location.reload(true);
+                }
+            });
+        }
+    }
+
+    jqForm.validate({
+        debug: true,
+        errorElement: "span",
+        errorClass: errorClassName,
+        validClass: validClassName,        
+        onfocusout: function(element){  // had to add when I disabled onkeyup
+            // make OK until ajax
+            //$("#"+element.id + "_Hidden").val( $(element).val() );
+            $(element).valid();
+        },
+        onkeyup: function(element){
+            console.log("onkeyup");
+            console.log(element);
+            $(element).removeClass(errorClassName).removeClass(validClassName).removeClass(loadingClassName);
+        },
+        errorPlacement: errorPlacement,
+        highlight: highlight,
+        unhighlight: unhighlight
+    });
+    
+    function errorPlacement(error, element) {
+        console.log("errorPlacement: element = ");
+        console.log(element);
+        $(element).attr("title", $(error).html());
+    }
+    
+    function highlight(element, errorClass, validClass) {
+        console.log("highlight: id=" + element.id + " errorClass="+errorClass+" validClass="+validClass);
+        $(element).addClass(errorClassName).removeClass(validClassName).removeClass(loadingClassName);
+        $("label[for=" + element.id + "]", element.form).addClass(errorClass);
+    }
+
+    function unhighlight(element, errorClass, validClass, doAjax) { // added doAjax to normal args
+        var saveElement = element;
+        console.log("unhighlight: id=" + element.id+" errorClass="+errorClass+" validClass="+validClass);
+        if (typeof(doAjax)==='undefined') doAjax = true;
+
+        $(element).attr("title", "");
+        $(element).removeClass(errorClassName).removeClass(loadingClassName).addClass(validClassName);
+        $(element.form).find("label[for=" + element.id + "]")
+                        .removeClass(errorClassName);
+                        
+        //if value not changed, no need to ajax
+        if (element.value == element.defaultValue)
+            return; 
+
+        //if ajax response called unhighlight, don't do again
+        if (!doAjax)
+            return;
+        
+        $(element).addClass(loadingClassName);
+        // ajax to see if taken
+        $.ajax({
+            type: "get",
+            url: "<?=$app_path?>/ajax/check-name",
+            data: {
+                form: "rename",
+                serverId: "<?=$viewData->serverRec->id?>",
+                field: element.id,
+                value: element.value
+            },
+            dataType: "json",
+            success: function(data) {
+                console.log("success: saveElement="+saveElement.id);
+                console.log("success: field="+data.field+" error="+data.error);
+                if (data.error == "")
+                    unhighlight(saveElement, errorClassName, validClassName, false);
+                else {
+                    highlight(saveElement, errorClassName, validClassName);
+                    //errorPlacement expects error in tags
+                    errorPlacement("<span>"+data.error+"</span>", saveElement);
+                }
+            },
+            failure: function(data) {
+                console.log("Ajax checkName failure");
+            }
+        });
+    }
+
+</script>

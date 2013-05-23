@@ -1,0 +1,23 @@
+<script>
+    $("#go_to_server").button({ icons: {primary: "ui-icon-search"} });
+    $("#manage_server").button({ icons: {primary: "ui-icon-gear"} });
+    
+    $("#AppConnectLink").click(appConnectDialog);
+
+    //selServerName = "<!--?=$viewData->serverRec->serverName?-->",
+    //selPublicDNS = "<!--?=$viewData->serverRec->publicDNS?-->",
+    //selCloudAccountId = "<!--?=$viewData->serverRec->cloudAccountId?-->";
+
+    $(document).ready(function() {
+        console.log('setting tooltip');
+        $('img[data-tooltip-content]').tooltip({
+           items: 'img[data-tooltip-content]',
+           content: function(){
+               var selector = $(this).data('tooltip-content');
+               var content = $(selector).html();
+               //console.log('tooltip='+content);               
+               return content;
+           } 
+        });
+    });
+</script>

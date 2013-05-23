@@ -1,0 +1,81 @@
+<div id="StopDialog" title="Warning" style="display:none">
+    This will stop the selected servers.<br />
+    Do you want to continue?
+</div>
+
+<script>
+    /*
+    function stopDialog(){
+        $("#StopDialog").dialog({
+            width: 450,
+            modal: true,
+            buttons: {
+                "Cancel": function() {$(this).dialog("destroy");},
+                "Stop": function (){startStopServer("Stop")}
+            }
+        });   
+    }
+    */
+    //$("#servers_stop").on('click', function (event){
+    function stopDialog(id, action) {
+        $("#StopDialog").dialog({
+            width: 450,
+            modal: true,
+            buttons: {
+                "Cancel": function() {$(this).dialog("destroy");},
+                "OK": function () {
+                    $(this).dialog("destroy");
+                    console.log("OK: id="+id+" action="+action);
+                    startStopServer(id, action, true)
+                }
+            }
+        });
+    }
+
+    function startStopServer(id, action, verified) {
+        if (typeof(verified)==='undefined') verified = false;
+        console.log("startStopServer: id="+id+" action="+action);
+        
+        if (!verified && (action == "Stop" || action == "Restart")) {
+            stopDialog(id, action);
+            return;
+        }
+        if (action == "Stop")
+            s = "Stopp"
+        else
+            s = action;
+        jWaiting(		
+            s+'ing server...',
+            {
+                autoHide : false, // added in v2.0
+                clickOverlay : false, // added in v2.0
+                HorizontalPosition : 'center',
+                VerticalPosition : 'center',
+                ShowOverlay : true
+            }
+        );
+
+        $.ajax({
+            type: "post",
+            url: "<?=$app_path?>/ajax/start-stop-server",
+            data: {
+                //id: "<$viewData->serverRec->id?>",
+                //id: getSessionItem("serverId"),
+                id: id,
+                action: action
+            },
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                if (data.success != true)
+                    alert("startStopServer: stop: PHP failure");
+                location.reload(true);
+            },
+            error: function() {
+                alert("startStopServer: stop: Ajax failure");
+                location.reload(true);
+            }
+        });                    
+    }
+
+</script>

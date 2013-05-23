@@ -1,0 +1,24 @@
+<script>
+    $(document).ready(function() {
+        $(".manage_server_tabs").tabs();
+        
+        $("#more_details").click(function() {
+            $("#more_details").hide();
+            $(".filtered").addClass("filtered_on_toggle").removeClass("filtered");
+        });
+        
+        $("#AppConnectLink").click(appConnectDialog);
+        
+        console.log('setting tooltip');
+        $('img[data-tooltip-content]').tooltip({
+           items: 'img[data-tooltip-content]',
+           content: function(){
+               var selector = $(this).data('tooltip-content');
+               var content = $(selector).html();
+               //console.log('tooltip='+content);               
+               return content;
+           } 
+        });
+    });
+
+</script>

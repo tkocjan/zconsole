@@ -1,0 +1,151 @@
+<script type="text/javascript">
+var selServerId = null,
+    selServerIds = [],
+    selServerName = null,   //set in serverDetails
+    selPublicDNS = null,    //ditto
+    selCloudAccountId = null;   //ditto
+
+$(document).ready(function(){ 
+    var myGrid = $("#server_grid"),
+        jqLoading = $("#details-loading"),
+        jqContents = $("#details-contents"),        
+        jqEmpty = $("#details-empty");
+
+  myGrid.jqGrid({
+    url:'<?=$app_path?>/ajax/get-servers-grid',
+    datatype: 'xml',
+    mtype: 'GET',
+    autowidth: true,
+    height: "100%",
+    loadonce: true,
+    rowNum: null,
+    //pager: '#server_pager',
+    //rowNum:10,
+    //rowList:[10,20,30],
+    //viewrecords: true,
+    sortname: 'serverName',
+    sortorder: 'asc',
+    gridview: true,
+    multiselect: true,
+    multiboxonly: true,
+    deselectAfterSort: false,
+    //caption: 'My first grid'
+    colNames:['Name','Status', 'Operating System','Server Type','Server Location','Cloud Account'],
+    colModel :[ 
+      {name:'name', index: 'serverName'}, //width:55}, 
+      {name:'status', index: 'status'}, //width:90}, 
+      {name:'os', index: 'osTypeId'}, //width:80}, 
+      {name:'type', index: 'serverTypeId'}, // width:80}, 
+      {name:'location', index: 'locationTypeId'}, // width:80}, 
+      {name:'cloud', index: 'cloudAccountId'} // width:150} 
+    ],
+    loadComplete: function() {
+        console.log("datatype = " + myGrid.jqGrid('getGridParam', 'datatype') );
+        
+        //now local sorting
+        myGrid.jqGrid('setGridParam', {datatype: 'local'});
+        
+        console.log("datatype = " + myGrid.jqGrid('getGridParam', 'datatype') );
+        
+        $.each(<?=$viewData->selRowsJS?>, function(index, rowId) {
+            console.log('setting row='+rowId);
+            myGrid.jqGrid('setSelection', rowId, true);
+        });
+    },
+    //onSelectRow: doSelectRow,
+    onSelectRow: function(id, status) {
+        console.log("Row selected: " + id + " " + status);
+        console.log("innerWidth=" + innerWidth);
+        
+        selServerId = null;
+        selServerName = null;   //set in serverDetails
+        selPublicDNS = null;    //ditto
+        selCloudAccountId = null;   //ditto
+
+        selServerIds = $(this).jqGrid('getGridParam', 'selarrrow');
+        //var status;
+
+        if (selServerIds.length > 0) {
+            var selRow = myGrid.jqGrid('getRowData', selServerIds[0]);
+            console.log("search = " + selRow['status'].search('Running') );
+            // text search the cell
+            if (selRow['status'].search('Running') >= 0)
+                status = 'Running';
+            else
+                status = 'Stopped';
+        }
+        console.log("status = " + status );
+        setServerToolbarState(selServerIds, status);
+        
+        if (selServerIds.length != 1) {
+            cancelLoad = true;
+            jqLoading.addClass("filtered");
+            jqContents.addClass("filtered");        
+            jqEmpty.removeClass("filtered");
+            return;
+        }
+
+        // only one selected -- update details
+        console.log("Only one row selected");
+        //Lib::setSessionItem("serverId", selServerIds[0]);
+        selServerId = selServerIds[0];
+        jqEmpty.addClass("filtered");        
+        jqLoading.removeClass("filtered");
+        jqContents.addClass("filtered");
+        cancelLoad = false;
+        jqContents.load(
+            "<?=$app_path?>/servers/load-server-details",
+            {serverId: selServerId},
+            function() {
+                if (cancelLoad)
+                    return;
+                jqEmpty.addClass("filtered");        
+                jqLoading.addClass("filtered");
+                jqContents.removeClass("filtered");
+            }
+        );
+        return;
+    }
+  }); 
+  
+}); 
+
+/*
+function doSelectRow(id, status) {
+    console.log("Row selected:" + id + " " + status);
+ 
+    var selServerIds = $('#server_grid').jqGrid('getGridParam', 'selarrrow');
+    if (selServerIds.length != 1) {
+        $("#details_container").html('<p>Select an element to show its details.</p>');
+        return;
+    }
+ 
+    // only one selected -- update details
+    console.log("Got here");
+    $("#details_container").html(
+        '<p><img align="absmiddle" src="<?=$app_path?>/images/preloader-icon.gif">Loading...</p>');
+    $("#details_container").load("<?=$app_path?>/ajax/serverDetails?id=" + id);
+    return;
+}
+*/
+/*
+$('#grid_container').bind('resize', function() {
+
+    // Get width of parent container
+    var width = $('#grid_container').attr('clientWidth');
+    if (width == null || width < 1){
+        // For IE, revert to offsetWidth if necessary
+        width = $('#grid_container').attr('offsetWidth');
+    }
+    width = width - 2; // Fudge factor to prevent horizontal scrollbars
+    if (width > 0 &&
+        // Only resize if new width exceeds a minimal threshold
+        // Fixes IE issue with in-place resizing when mousing-over frame bars
+        Math.abs(width - $('#server_grid').width()) > 5)
+    {
+        $('#server_grid').setGridWidth(width);
+    }
+
+}).trigger('resize');
+*/
+</script>

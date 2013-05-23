@@ -1,0 +1,888 @@
+<?php include PORTABLE_PHTML; ?>
+
+<div class="ui-layout-center">
+    <h2 class="header">New Server</h2>
+    <div id="main_container" class="ui-layout-content">
+    <form id="new_server" class="no_intro_submit" novalidate="novalidate" method="post" 
+          data-validation-warning-text="Please correct the errors on this form." 
+          data-validate="true" data-show-processing="true" data-confirm-popup-width="500" 
+          data-confirm-ok-text="Continue" data-confirm-element=".server_warnings" 
+          action="/servers" accept-charset="UTF-8" data-confirm-popup=".server_warnings">
+        <div class="server_warnings filtered">
+        </div>
+
+        <input id="server_server_type_id" name="server[server_type_id]" value="100" type="hidden">
+        <div>
+            <table id ="NameTable" class="properties" style="font-size: 18px; margin-left: 36px; margin-bottom:0;  vertical-align: top;">
+                <tbody><tr style="vertical-align: top;">
+                        <th>
+                            <span>
+                            <label for="server_name">Name</label>
+                            </span>
+                        </th>
+                        <td>
+                            <span>
+                            <input data-validate="true" id="server_name" name="server[name]" 
+                                   title="" field="serverName" required=""
+                                   class="ui-widget-content ui-corner-all"
+                                   size="40" value="New server" type="text">
+                            </span>
+                        </td>
+                        <td>
+                            <img data-tooltip-added="true" alt="?" class="tooltip_icon" src="<?=$app_path?>/images/fff-icons/help.png?1354120685" title="One line description of the server, it must be unique.">
+                        </td>
+                    </tr>
+                    <tr style="vertical-align: top;">
+                        <th>
+                            <span>
+                            <label for="server_server_domain_name_attributes_name">Domain Name</label>
+                            </span>
+                        </th>
+                        <td>
+                            <span>
+                            <input data-validate="true" id="server_server_domain_name_attributes_name" 
+                                   name="server[server_domain_name_attributes][name]" 
+                                   title="" field="publicDNS" required=""
+                                   class="ui-widget-content ui-corner-all"
+                                   size="30" value="new-server-6befdb" type="text">
+                            </span>
+                            <input id="server_server_domain_name_attributes_zone_name" 
+                                   name="server[server_domain_name_attributes][zone_name]" 
+                                   value="infusionappdev.com" type="hidden">
+                        </td>
+                        <td>
+                            <?=DNS_ZONE?>
+                            <img data-tooltip-added="true" alt="?" class="tooltip_icon" src="<?=$app_path?>/images/fff-icons/help.png?1354120685" title="Please choose your domain name prefix.">
+                        </td>
+                    </tr>
+                </tbody></table>
+            <table>
+                <tbody><tr>
+                        <td>
+                            <div style="width:680px;height:1px;"></div>
+                            <table class="stack_component_container apps_component" cellpadding="0" cellspacing="0">
+                                <tbody><tr>
+                                        <td class="top-left"></td>
+                                        <td class="top"></td>
+                                        <td class="top-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left-border"></td>
+                                        <td class="stack_component">
+                                            <table class="details">
+                                                <tbody><tr>
+                                                        <td class="component_list_td" valign="top">
+                                                            <ul class="component_list" id="application_list" type="none">
+                                                                <li class="component">
+                                                                    <a href="#" class=" ui-popup" 
+                                                                       data-content-selector="#default_application_properties" 
+                                                                       data-popup-tab="0" title="Application Options">
+                                                                        <img alt="App-settings" src="<?=$app_path?>/images/logo-app/app-settings.png">
+                                                                        Application Options</a>
+                                                                </li>
+                                                                <li class="component">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#runtime_properties" 
+                                                                       title="Development Options">
+                                                                        <img alt="Runtime-options" src="<?=$app_path?>/images/logo-app/runtime-options.png?1354120685"> Development Options</a>
+                                                                </li>
+
+                                                                <li class="component" id="new-app-li">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#app_selector" 
+                                                                       title="Add New Application">
+                                                                        <img alt="New-app3" src="<?=$app_path?>/images/logo-app/new-app3.png">
+                                                                        Add New Application</a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+                                        </td>
+                                        <td class="right-border"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bottom-left"></td>
+                                        <td class="bottom"></td>
+                                        <td class="bottom-right"></td>
+                                    </tr>
+                                </tbody></table>
+                            <table class="stack_component_container server_component" cellpadding="0" cellspacing="0">
+                                <tbody><tr>
+                                        <td class="top-left"></td>
+                                        <td class="top"></td>
+                                        <td class="top-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left-border"></td>
+                                        <td class="stack_component">
+                                            <table class="details">
+                                                <tbody><tr>
+                                                        <td class="component_list_td" valign="top">
+                                                            <ul class="component_list" id="server_list" type="none">
+                                                                <li class="component os_toggled_content" data-base_image_id="56">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_os_properties" 
+                                                                       title="Operating System"><img alt="Component-ubuntu" src="<?=$app_path?>/images/logo-target/component-ubuntu.png?1354120685"> Ubuntu 12.04 64bits </a>
+                                                                </li>
+                                                                <li class="component os_toggled_content" data-base_image_id="57" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_os_properties" title="Operating System"><img alt="Component-ubuntu" src="<?=$app_path?>/images/logo-target/component-ubuntu.png?1354120685"> Ubuntu 12.04 32bits </a>
+                                                                </li>
+                                                                <li class="component os_toggled_content" data-base_image_id="58" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_os_properties" title="Operating System"><img alt="Component-ubuntu" src="<?=$app_path?>/images/logo-target/component-ubuntu.png?1354120685"> Ubuntu 10.04 64bits </a>
+                                                                </li>
+                                                                <li class="component os_toggled_content" data-base_image_id="59" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_os_properties" title="Operating System"><img alt="Component-ubuntu" src="<?=$app_path?>/images/logo-target/component-ubuntu.png?1354120685"> Ubuntu 10.04 32bits </a>
+                                                                </li>
+                                                                <li class="component os_toggled_content" data-base_image_id="27" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_os_properties" title="Operating System"><img alt="Component-fedora" src="<?=$app_path?>/images/logo-target/component-fedora.png?1354120685"> Fedora 14 64bits </a>
+                                                                </li>
+                                                                <li class="component os_toggled_content" data-base_image_id="26" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_os_properties" title="Operating System"><img alt="Component-fedora" src="<?=$app_path?>/images/logo-target/component-fedora.png?1354120685"> Fedora 14 32bits </a>
+                                                                </li>
+                                                                <li class="component os_toggled_content" data-base_image_id="54" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_os_properties" title="Operating System"><img alt="Component-redhat" src="<?=$app_path?>/images/logo-target/component-redhat.png?1354120685"> RedHat 6.3 64bits (native)</a>
+                                                                </li>
+                                                                <li class="component os_toggled_content" data-base_image_id="55" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_os_properties" title="Operating System"><img alt="Component-redhat" src="<?=$app_path?>/images/logo-target/component-redhat.png?1354120685"> RedHat 6.3 32bits (native)</a>
+                                                                </li>
+                                                                <li class="component os_toggled_content" data-base_image_id="52" style="display:none;">
+                                                                        <a href="#" class=" ui-popup" data-content-selector="#server_os_properties" title="Operating System"><img alt="Component-amazon" src="<?=$app_path?>/images/logo-target/component-amazon.png?1354120685"> Amazon 2012.09.0 64bits (native)</a>
+                                                                </li>
+                                                                <li class="component os_toggled_content" data-base_image_id="53" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_os_properties" title="Operating System"><img alt="Component-amazon" src="<?=$app_path?>/images/logo-target/component-amazon.png?1354120685"> Amazon 2012.09.0 32bits (native)</a>
+                                                                </li>
+                                                                <li class="component">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_flavor_properties" title="Server Type"><img alt="Micro" src="<?=$app_path?>/images/logo-server/micro.png?1354120685"><span class="flavor_toggled_content" data-flavor-capacity="10" data-flavor_id="t1.micro" style="">Micro</span><span class="flavor_toggled_content" data-flavor-capacity="20" data-flavor_id="m1.small" style="display:none;">Small</span><span class="flavor_toggled_content" data-flavor-capacity="30" data-flavor_id="m1.medium" style="display:none;">Medium</span><span class="flavor_toggled_content" data-flavor-capacity="30" data-flavor_id="c1.medium" style="display:none;">High CPU Medium</span><span class="flavor_toggled_content" data-flavor-capacity="60" data-flavor_id="m1.large" style="display:none;">Large</span><span class="flavor_toggled_content" data-flavor-capacity="120" data-flavor_id="m2.xlarge" style="display:none;">High Mem XL</span><span class="flavor_toggled_content" data-flavor-capacity="80" data-flavor_id="c1.xlarge" style="display:none;">High CPU Extra</span><span class="flavor_toggled_content" data-flavor-capacity="120" data-flavor_id="m1.xlarge" style="display:none;">Extra Large</span><span class="flavor_toggled_content" data-flavor-capacity="250" data-flavor_id="m2.2xlarge" style="display:none;">High Mem XXL</span><span class="flavor_toggled_content" data-flavor-capacity="500" data-flavor_id="m2.4xlarge" style="display:none;">High Mem 4XL</span><br><span style="color:#004B91">
+                                                                            <big>$<span class="flavor_cost_container">18.00</span></big> /mo</span></a>
+                                                                </li>
+                                                                <li class="component">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#server_disk_properties" title="Disk Size"><img alt="Disk-space" src="<?=$app_path?>/images/logo-server/disk-space.png?1354120685"> 
+                                                                        <span class="disk_size_value_container">10</span> GB<br><span style="color:#004B91">
+                                                                            <big>$<span class="disk_size_cost_container">1.10</span></big> /mo</span></a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+                                        </td>
+                                        <td class="right-border"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bottom-left"></td>
+                                        <td class="bottom"></td>
+                                        <td class="bottom-right"></td>
+                                    </tr>
+                                </tbody></table>
+                            <table class="stack_component_container cloud_component" cellpadding="0" cellspacing="0">
+                                <tbody><tr>
+                                        <td class="top-left"></td>
+                                        <td class="top"></td>
+                                        <td class="top-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left-border"></td>
+                                        <td class="stack_component">
+                                            <table class="details">
+                                                <tbody><tr>
+                                                        <td class="component_list_td" valign="top">
+                                                            <ul class="component_list" id="cloud_list" type="none">
+                                                                <li class="component cloud_account_toggled_content" data-cloud_id="7968">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_account_properties" title="Cloud Account"><img alt="Component-amazon" src="<?=$app_path?>/images/logo-target/component-amazon.png?1354120685"> My AWS Account</a>
+                                                                </li>
+                                                                <li class="component cloud_region_toggled_content" data-region_id="us-east-1" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_region_properties" title="Server Location"><img alt="Us-flag" src="<?=$app_path?>/images/logo-cloud/us-flag.png?1354120685"> US East Coast (Virginia)</a>
+                                                                </li>
+                                                                <li class="component cloud_region_toggled_content" data-region_id="us-west-1">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_region_properties" title="Server Location"><img alt="Us-flag" src="<?=$app_path?>/images/logo-cloud/us-flag.png?1354120685"> US West Coast (N. California)</a>
+                                                                </li>
+                                                                <li class="component cloud_region_toggled_content" data-region_id="us-west-2" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_region_properties" title="Server Location"><img alt="Us-flag" src="<?=$app_path?>/images/logo-cloud/us-flag.png?1354120685"> US West Coast (Oregon)</a>
+                                                                </li>
+                                                                <li class="component cloud_region_toggled_content" data-region_id="eu-west-1" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_region_properties" title="Server Location"><img alt="Eu-flag" src="<?=$app_path?>/images/logo-cloud/eu-flag.png?1354120685"> Europe (Ireland)</a>
+                                                                </li>
+                                                                <li class="component cloud_region_toggled_content" data-region_id="ap-southeast-1" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_region_properties" title="Server Location"><img alt="Singapore-flag" src="<?=$app_path?>/images/logo-cloud/singapore-flag.png?1354120685"> Asia Pacific (Singapore)</a>
+                                                                </li>
+                                                                <li class="component cloud_region_toggled_content" data-region_id="ap-southeast-2" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_region_properties" title="Server Location"><img alt="Australia-flag" src="<?=$app_path?>/images/logo-cloud/australia-flag.png?1354120685"> Asia Pacific (Sydney)</a>
+                                                                </li>
+                                                                <li class="component cloud_region_toggled_content" data-region_id="ap-northeast-1" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_region_properties" title="Server Location"><img alt="Japan-flag" src="<?=$app_path?>/images/logo-cloud/japan-flag.png?1354120685"> Asia Pacific (Tokyo)</a>
+                                                                </li>
+                                                                <li class="component cloud_region_toggled_content" data-region_id="sa-east-1" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_region_properties" title="Server Location"><img alt="Sa-flag" src="<?=$app_path?>/images/logo-cloud/sa-flag.png?1354120685"> South America (Sao Paulo)</a>
+                                                                </li>
+                                                                <li class="component cloud_ip_toggled_content" data-cloud_ip="dynamic">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_ip_properties" title="IP Address"><img alt="Ip-icon" src="<?=$app_path?>/images/logo-cloud/ip-icon.png?1354120685"> Dynamic IP</a>
+                                                                </li>
+                                                                <li class="component cloud_ip_toggled_content" data-cloud_ip="static" style="display:none;">
+                                                                    <a href="#" class=" ui-popup" data-content-selector="#cloud_ip_properties" title="IP Address"><img alt="Ip-icon" src="<?=$app_path?>/images/logo-cloud/ip-icon.png?1354120685"> Static IP</a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+                                        </td>
+                                        <td class="right-border"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bottom-left"></td>
+                                        <td class="bottom"></td>
+                                        <td class="bottom-right"></td>
+                                    </tr>
+                                </tbody></table>
+                        </td>
+                        <td class="new_server_warnings" valign="middle">
+                            <p class="new_server_notice email_settings_warning" style="display:none">
+                                <img alt="" src="<?=$app_path?>/images/fatcow/16/error.png?1354120685" align="absmiddle">
+                                <a href="#" class=" ui-popup" data-content-selector="#email_warning_popup" title="Email not configured">Email not configured</a>
+                            </p>
+                            <div class="filtered" id="email_warning_popup">
+                                <p>The application email settings have not been configured. Some applications may not be fully functional.</p>
+                                <p>You can configure your email settings now (recommended) by clicking on the ‘Configure Email’ button below and providing details for your email account. Alternatively, you can configure email for each application manually once the server has been started.</p>
+                                <a role="button" href="#" class="ui-popup ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-button="true" data-close-parent-popup="true" data-content-selector="#default_application_properties" data-operation="Configure Email" data-popup-button="append" data-popup-tab="1" title="Application Options"><span class="ui-button-text">Configure Email</span></a>
+                            </div>
+                            <table class="new_server_cost_table ui-widget-content ui-corner-all">
+                                <tbody><tr>
+                                        <th colspan="2">
+                                            Estimated Amazon charges:
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <img alt="Server" src="<?=$app_path?>/images/fff-icons/server.png" 
+                                                 title="Server Type" align="absmiddle">
+                                            <span class="flavor_toggled_content" data-flavor_id="t1.micro" title="Server Type">
+                                                Micro
+                                            </span>
+                                            <span class="flavor_toggled_content" data-flavor_id="m1.small" style="display:none;" title="Server Type">
+                                                Small
+                                            </span>
+                                            <span class="flavor_toggled_content" data-flavor_id="m1.medium" style="display:none;" title="Server Type">
+                                                Medium
+                                            </span>
+                                            <span class="flavor_toggled_content" data-flavor_id="c1.medium" style="display:none;" title="Server Type">
+                                                High CPU Medium
+                                            </span>
+                                            <span class="flavor_toggled_content" data-flavor_id="m1.large" style="display:none;" title="Server Type">
+                                                Large
+                                            </span>
+                                            <span class="flavor_toggled_content" data-flavor_id="m2.xlarge" style="display:none;" title="Server Type">
+                                                High Mem XL
+                                            </span>
+                                            <span class="flavor_toggled_content" data-flavor_id="c1.xlarge" style="display:none;" title="Server Type">
+                                                High CPU Extra
+                                            </span>
+                                            <span class="flavor_toggled_content" data-flavor_id="m1.xlarge" style="display:none;" title="Server Type">
+                                                Extra Large
+                                            </span>
+                                            <span class="flavor_toggled_content" data-flavor_id="m2.2xlarge" style="display:none;" title="Server Type">
+                                                High Mem XXL
+                                            </span>
+                                            <span class="flavor_toggled_content" data-flavor_id="m2.4xlarge" style="display:none;" title="Server Type">
+                                                High Mem 4XL
+                                            </span>
+                                        </th>
+                                        <td>
+                                <big>$<span class="flavor_cost_container">18.00
+                                    </span></big>
+                                /mo
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <img alt="Drive" src="<?=$app_path?>/images/fff-icons/drive.png?1354120685" title="Disk Size" align="absmiddle">
+                            <span class="disk_size_value_container" title="Disk Size">10</span>
+                            GB
+                        </th>
+                        <td>
+                <big>$<span class="disk_size_cost_container">1.10
+                    </span></big>
+                /mo
+                </td>
+                </tr>
+                <tr class="total">
+                    <th>Total</th>
+                    <td>
+                <big>$<span class="total_server_cost">19.10
+                    </span></big>
+                /mo
+                </td>
+                </tr>
+                <tr>
+                    <td class="note" colspan="2">
+                        <div style="display:none"><span class="os_free_tier"><span class="cpu_free_tier"><span class="disk_size_free_tier"><span style="color: green"><img alt="" src="<?=$app_path?>/images/fff-icons/accept.png?1354120685" valign="bottom"> Free Tier Eligible</span> <br>
+                                        Note that your server may be FREE if you qualify.
+                                        <a href="http://wiki.bitnami.org/BitNami_Cloud_Hosting/FAQ#Why_AWS_Free_Tier_servers_still_show_as_charges_in_the_BCH_console" target="_blank">Learn More.</a>
+                                    </span></span></span></div></td>
+                </tr>
+                </tbody></table><br/>
+            <p>
+                <!--a role="button" href="#" class="form_action new_server_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-secondary" 
+                   data-button="true" data-icon-right="launch-color" data-operation="build_and_launch">
+                    <span class="ui-button-text">Build and Launch</span>
+                    <span class="ui-button-icon-secondary ui-icon ui-icon-launch-color"></span></a-->
+                <a role="button" data-operation="build_and_launch" href="#"
+                   class="new_server_button">
+                    Build and Launch</a>
+            </p><br/>
+            <p>
+                <!--a role="button" data-confirm-popup="Server definition will be lost. Do you want to continue?" 
+                   href="https://app.bitnamihosting.com/servers" class="new_server_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-secondary" 
+                   data-button="true" data-confirm-ok-text="Ok" data-icon-right="cancel-color" 
+                   data-operation="cancel">
+                    <span class="ui-button-text">Cancel</span>
+                    <span class="ui-button-icon-secondary ui-icon ui-icon-cancel-color"></span></a-->
+                <a role="button" data-operation="cancel" href="<?=$app_path?>/servers"
+                    class="new_server_button">
+                    Cancel</a>
+                <div id="CancelDialog" title="Warning" style="display:none">Server definition will be lost.<br />Do you want to continue?</div>
+            </p>
+            </td>
+            </tr>
+            </tbody></table>
+        </div>
+
+        <div class="filtered">
+        <div class="ui-popup-content ui-popup-with-return" id="default_application_properties">
+            <div width="590">
+                <div class="simple_tabs ui-tabs ui-widget ui-widget-content ui-corner-all" style="border:0 !important;">
+                    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                        <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
+                            <a href="#application-options-prop">Main Properties</a>
+                        </li>
+                        <li class="ui-state-default ui-corner-top">
+                            <a href="#application-options-email">Email Configuration</a>
+                        </li>
+                    </ul>
+                    <div data-popup-id="application-options-prop" style="padding-bottom: 0;">
+                        <table class="properties">
+                            <tbody><tr>
+                                    <th style="width:150px;">Application Login</th>
+                                    <td>
+                                        <input id="server_base_user" name="server[base_user]" value="user" type="text">
+                                        <img data-tooltip-added="true" alt="?" class="tooltip_icon" src="<?=$app_path?>/images/fff-icons/help.png?1354120685" title="Username for the applications">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Application Password</th>
+                                    <td>
+                                        <input autocomplete="off" id="server_base_password" name="server[base_password]" value="" type="password">
+                                        <img data-tooltip-added="true" alt="?" class="tooltip_icon" src="<?=$app_path?>/images/fff-icons/help.png?1354120685" title="Password for the applications. Leave blank and a secure random one will be generated">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Re-Type Password</th>
+                                    <td><input autocomplete="off" id="server_base_password_confirmation" name="server[base_password_confirmation]" value="" type="password"></td>
+                                </tr>
+                                <tr>
+                                    <th>Display Name</th>
+                                    <td>
+                                        <input id="server_properties_base_user_name" name="server[properties][base_user_name]" value="User Name" type="text">
+                                        <img data-tooltip-added="true" alt="?" class="tooltip_icon" src="<?=$app_path?>/images/fff-icons/help.png?1354120685" title="Display name used on some applications">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>
+                                        <input id="server_properties_base_mail" name="server[properties][base_mail]" value="tkocjan@yahoo.com" type="text">
+                                        <img data-tooltip-added="true" alt="?" class="tooltip_icon" src="<?=$app_path?>/images/fff-icons/help.png?1354120685" title="Email address. Used by some applications for notifications.">
+                                    </td>
+                                </tr>
+                            </tbody></table>
+                    </div>
+                    <div data-popup-id="application-options-email" style="padding-bottom: 0;">
+                        <table class="properties email_settings_container">
+                            <tbody><tr>
+                                    <th style="width: 150px;">Email Provider</th>
+                                    <td>
+                                        <select class="email_settings_input" id="server_properties_smtp_provider" name="server[properties][smtp_provider]">
+                                            <option value="">None</option>
+                                            <option value="gmail">Gmail</option>
+                                            <option value="custom">Custom SMTP</option></select>
+                                    </td>
+                                </tr>
+                                <tr class="filtered_field" data-content-for-provider="gmail custom">
+                                    <th>User</th>
+                                    <td>
+                                        <input id="server_smtp_user" name="server[smtp_user]" size="30" type="text">
+                                    </td>
+                                </tr>
+                                <tr class="filtered_field" data-content-for-provider="gmail custom">
+                                    <th>Password</th>
+                                    <td>
+                                        <input id="server_smtp_password" name="server[smtp_password]" size="30" type="password">
+                                    </td>
+                                </tr>
+                                <tr class="filtered_field" data-content-for-provider="custom">
+                                    <th>SMTP Host</th>
+                                    <td>
+                                        <input id="server_properties_smtp_host" name="server[properties][smtp_host]" size="30" type="text">
+                                    </td>
+                                </tr>
+                                <tr class="filtered_field" data-content-for-provider="custom">
+                                    <th>SMTP Port</th>
+                                    <td>
+                                        <input id="server_properties_smtp_port" name="server[properties][smtp_port]" size="30" type="text">
+                                    </td>
+                                </tr>
+                                <tr class="filtered_field" data-content-for-provider="custom">
+                                    <th>SMTP Protocol</th>
+                                    <td>
+                                        <select id="server_properties_smtp_protocol" name="server[properties][smtp_protocol]"><option value="">None</option>
+                                            <option value="ssl">SSL</option>
+                                            <option value="tls">TLS</option></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-size: 11px; padding-top: 10px;">
+                                        <img alt="Information" src="<?=$app_path?>/images/fff-icons/information.png?1354120685" align="absmiddle">
+                                        This settings will be used for sending emails from: Dokuwiki, Drupal, Joomla!, Moodle, Redmine, SugarCRM, WordPress, Alfresco, Magento, Pootle, LimeSurvey, WordPress Multisite, OSClass, Open Atrium, ThinkUp, ownCloud, and TestLink.
+                                    </td>
+                                </tr>
+                            </tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui-popup-content ui-popup-with-return" id="runtime_properties">
+            <div width="760">
+                <p>
+                    All BitNami servers come preinstalled with the following software. Some components can be optionally enabled to run on server startup.
+                </p>
+                <table class="runtime_properties">
+                    <tbody><tr>
+                            <th>
+                                <img alt="World" src="<?=$app_path?>/images/fatcow/32/world.png?1354120685" align="absmiddle">
+                                Web and App Servers
+                            </th>
+                            <th>
+                                <img alt="Database" src="<?=$app_path?>/images/fatcow/32/database.png?1354120685" align="absmiddle">
+                                Database Servers
+                            </th>
+                            <th>
+                                <img alt="Plugin" src="<?=$app_path?>/images/fatcow/32/plugin.png?1354120685" align="absmiddle">
+                                Runtimes
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ul type="none">
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-apache">Apache</label>
+                                    </li>
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-nginx">Nginx</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-apache-tomcat" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="apache-tomcat" type="checkbox">
+                                        <label for="component-checkbox-apache-tomcat">Tomcat</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-jboss" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="jboss" type="checkbox">
+                                        <label for="component-checkbox-jboss">JBoss</label>
+                                        <span style="color:gray; font-weight: normal; font-size: 8px">
+                                            beta
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-passenger" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="passenger" type="checkbox">
+                                        <label for="component-checkbox-passenger">Phusion Passenger</label>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul type="none">
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-mysql">MySQL</label>
+                                    </li>
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-sqlite">SQLite</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-postgresql" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="postgresql" type="checkbox">
+                                        <label for="component-checkbox-postgresql">PostgreSQL</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-memcached" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="memcached" type="checkbox">
+                                        <label for="component-checkbox-memcached">Memcached</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-redis" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="redis" type="checkbox">
+                                        <label for="component-checkbox-redis">Redis</label>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td rowspan="2">
+                                <ul type="none">
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-php">PHP</label>
+                                    </li>
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-ruby">Ruby</label>
+                                    </li>
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-java">Java</label>
+                                    </li>
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-python">Python</label>
+                                    </li>
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-perl">Perl</label>
+                                    </li>
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-nodejs">NodeJS</label>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <img alt="Server_components" src="<?=$app_path?>/images/fatcow/32/server_components.png?1354120685" align="absmiddle">
+                                Frameworks
+                            </th>
+                            <th>
+                                <img alt="Brick" src="<?=$app_path?>/images/fatcow/32/brick.png?1354120685" align="absmiddle">
+                                Others
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ul type="none">
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-rails">Rails</label>
+                                    </li>
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-zend">Zend Framework</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-django" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="django" type="checkbox">
+                                        <label for="component-checkbox-django">Django</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-cakephp" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="cakephp" type="checkbox">
+                                        <label for="component-checkbox-cakephp">CakePHP</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-codeigniter" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="codeigniter" type="checkbox">
+                                        <label for="component-checkbox-codeigniter">CodeIgniter</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-symfony" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="symfony" type="checkbox">
+                                        <label for="component-checkbox-symfony">Symfony</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-smarty" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="smarty" type="checkbox">
+                                        <label for="component-checkbox-smarty">Smarty</label>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul type="none">
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-sphinx">Sphinx</label>
+                                    </li>
+                                    <li>
+                                        <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                        <label for="component-checkbox-git">Git</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-varnish" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="varnish" type="checkbox">
+                                        <label for="component-checkbox-varnish">Varnish</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-apache-solr" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="apache-solr" type="checkbox">
+                                        <label for="component-checkbox-apache-solr">Apache Solr</label>
+                                    </li>
+                                    <li>
+                                        <input class="checkbox-input" data-popup-id="component-checkbox-libreoffice" id="server_properties_runtime_properties_" name="server[properties][runtime_properties][]" value="libreoffice" type="checkbox">
+                                        <label for="component-checkbox-libreoffice">LibreOffice</label>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td style="vertical-align:bottom; text-align:right; margin-right: 10px;" valign="bottom">
+                                <img alt="Tick" src="<?=$app_path?>/images/fff-icons/tick.png?1354120685" align="absmiddle">
+                                = Default Component
+                            </td>
+                        </tr>
+                    </tbody></table>
+
+            </div>
+        </div>
+        <?php include('create/CreateOSDialog.html.php');?>
+        <?php include('create/CreateServerDialog.html.php');?>
+        <?php include('create/CreateDiskDialog.html.php');?>
+        <div class="ui-popup-content ui-popup-with-return" id="cloud_account_properties">
+            <div width="450">
+                <table class="properties">
+                    <tbody><tr>
+                            <th><label for="server_cloud_id">Cloud Account</label></th>
+                            <td>
+                                <select class="new_server_cloud_selector" id="server_cloud_id" name="server[cloud_id]">
+                                    <option value="7968" selected="selected">My AWS Account</option></select>
+                                <img data-tooltip-added="true" alt="?" class="tooltip_icon" src="<?=$app_path?>/images/fff-icons/help.png?1354120685" title="Cloud credentials to use for this server.">
+                            </td>
+                        </tr>
+                    </tbody></table>
+                <span class="cloud_data" data-cloud="7968" data-region="us-west-1" style="display:none;">
+                    <span class="cloud_region_data" data-region="us-east-1">
+                        <span class="cloud_cost_storage">0.1</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="linux">46.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="linux">324.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m3.xlarge" data-platform-flavor="linux">417.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="linux">475.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="linux">118.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m3.2xlarge" data-platform-flavor="linux">835.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="linux">374.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="linux">1296.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="linux">648.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="linux">14.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="linux">93.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="linux">187.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="redhat">100.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="redhat">367.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="redhat">547.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="redhat">162.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="redhat">504.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="redhat">1368.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="redhat">691.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="redhat">57.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="redhat">136.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="redhat">273.6</span>
+                    </span>
+                    <span class="cloud_region_data" data-region="us-west-1">
+                        <span class="cloud_cost_storage">0.11</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="linux">64.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="linux">364.32</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="linux">535.68</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="linux">133.92</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="linux">518.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="linux">1457.28</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="linux">728.64</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="linux">18.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="linux">129.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="linux">259.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="redhat">108.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="redhat">407.52</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="redhat">606.96</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="redhat">177.12</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="redhat">561.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="redhat">1530.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="redhat">772.56</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="redhat">61.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="redhat">151.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="redhat">302.4</span>
+                    </span>
+                    <span class="cloud_region_data" data-region="us-west-2">
+                        <span class="cloud_cost_storage">0.1</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="linux">46.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="linux">324.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="linux">475.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="linux">118.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="linux">374.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="linux">1296.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="linux">648.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="linux">14.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="linux">93.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="linux">187.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="redhat">100.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="redhat">367.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="redhat">547.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="redhat">162.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="redhat">504.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="redhat">1368.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="redhat">691.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="redhat">57.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="redhat">136.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="redhat">273.6</span>
+                    </span>
+                    <span class="cloud_region_data" data-region="eu-west-1">
+                        <span class="cloud_cost_storage">0.11</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="linux">64.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="linux">364.32</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="linux">535.68</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="linux">133.92</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="linux">518.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="linux">1457.28</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="linux">728.64</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="linux">18.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="linux">129.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="linux">259.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="redhat">108.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="redhat">417.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="redhat">604.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="redhat">176.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="redhat">561.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="redhat">1569.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="redhat">792.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="redhat">61.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="redhat">151.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="redhat">302.4</span>
+                    </span>
+                    <span class="cloud_region_data" data-region="ap-southeast-1">
+                        <span class="cloud_cost_storage">0.11</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="linux">64.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="linux">364.32</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="linux">535.68</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="linux">133.92</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="linux">518.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="linux">1457.28</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="linux">728.64</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="linux">18.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="linux">129.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="linux">259.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="redhat">108.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="redhat">417.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="redhat">604.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="redhat">176.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="redhat">561.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="redhat">1569.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="redhat">792.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="redhat">61.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="redhat">151.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="redhat">302.4</span>
+                    </span>
+                    <span class="cloud_region_data" data-region="ap-southeast-2">
+                        <span class="cloud_cost_storage">0.11</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="linux">61.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="linux">364.32</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="linux">535.68</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="linux">133.92</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="linux">489.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="linux">1457.28</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="linux">728.64</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="linux">18.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="linux">122.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="linux">244.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="redhat">61.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="redhat">364.32</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="redhat">535.68</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="redhat">133.92</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="redhat">489.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="redhat">1457.28</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="redhat">728.64</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="redhat">18.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="redhat">122.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="redhat">244.8</span>
+                    </span>
+                    <span class="cloud_region_data" data-region="ap-northeast-1">
+                        <span class="cloud_cost_storage">0.12</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="linux">66.24</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="linux">372.96</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="linux">547.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="linux">136.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="linux">529.92</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="linux">1491.84</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="linux">745.92</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="linux">19.44</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="linux">132.48</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="linux">264.96</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="redhat">111.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="redhat">439.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="redhat">633.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="redhat">183.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="redhat">590.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="redhat">1648.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="redhat">835.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="redhat">62.64</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="redhat">158.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="redhat">316.8</span>
+                    </span>
+                    <span class="cloud_region_data" data-region="sa-east-1">
+                        <span class="cloud_cost_storage">0.19</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="linux">82.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="linux">489.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="linux">662.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="linux">165.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="linux">662.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="linux">1958.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="linux">979.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="linux">19.44</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="linux">165.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="linux">331.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.small" data-platform-flavor="redhat">126.0</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.xlarge" data-platform-flavor="redhat">532.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.xlarge" data-platform-flavor="redhat">734.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="c1.medium" data-platform-flavor="redhat">208.8</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.xlarge" data-platform-flavor="redhat">705.6</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.4xlarge" data-platform-flavor="redhat">2030.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="m2.2xlarge" data-platform-flavor="redhat">1022.4</span>
+                        <span class="cloud_cost_cpu" data-flavor="t1.micro" data-platform-flavor="redhat">62.64</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.medium" data-platform-flavor="redhat">187.2</span>
+                        <span class="cloud_cost_cpu" data-flavor="m1.large" data-platform-flavor="redhat">374.4</span>
+                    </span>
+                </span>
+            </div>
+        </div>
+        <div class="ui-popup-content ui-popup-with-return" id="cloud_region_properties">
+            <div width="400">
+                <table class="properties">
+                    <tbody><tr>
+                            <th><label for="server_region_id">Server Location</label></th>
+                            <td>
+                                <select class="new_server_region_selector" name="server[region_id]">
+                                    <option value="us-east-1">US East Coast (Virginia)</option>
+                                    <option value="us-west-1" selected="selected">US West Coast (N. California)</option>
+                                    <option value="us-west-2">US West Coast (Oregon)</option>
+                                    <option value="eu-west-1">Europe (Ireland)</option>
+                                    <option value="ap-southeast-1">Asia Pacific (Singapore)</option>
+                                    <option value="ap-southeast-2">Asia Pacific (Sydney)</option>
+                                    <option value="ap-northeast-1">Asia Pacific (Tokyo)</option>
+                                    <option value="sa-east-1">South America (Sao Paulo)</option></select>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                <a href="#" onclick="$(this).toggle().next().toggle();; return false;">Advanced Options</a>
+                <table class="properties" style="display:none;">
+                    <tbody><tr>
+                            <th><label for="server_availability_zone_id">Availability Zone</label></th>
+                            <td>
+                                <input id="server_availability_zone_id" name="server[availability_zone_id]" size="30" style="width: 120px;" type="text">
+                                <img data-tooltip-added="true" alt="?" class="tooltip_icon" src="<?=$app_path?>/images/fff-icons/help.png?1354120685" title="The AWS availability zone is a distinct location within the AWS Region. Please make sure you understand these concepts before changing this setting. We recommend leaving the default value and then the AWS system will choose the best location for your machine.">
+                            </td>
+                        </tr>
+                    </tbody></table>
+            </div>
+        </div>
+        <div class="ui-popup-content ui-popup-with-return" id="cloud_ip_properties">
+            <div width="400">
+                <table class="properties">
+                    <tbody><tr>
+                            <th><label for="server_static_ip_id">IP Address</label></th>
+                            <td>
+                                <select class="new_server_ip_selector" id="server_static_ip_id" name="server[static_ip_id]"><option value="">Dynamic IP</option>
+                                    <option value="0">Newly created static IP</option></select>
+                                <img data-tooltip-added="true" alt="?" class="tooltip_icon" src="<?=$app_path?>/images/fff-icons/help.png?1354120685" title="IP address to assign the server upon startup. A dynamic address means an arbitrary address will be assigned when the server is started. The address will be lost once the server is stopped or rebooted. Newly created static IP address means that an address will be assigned that will be permanent between reboots.">
+
+                            </td>
+                        </tr>
+                    </tbody></table>
+                <div class="plan_selector_warning">
+                    <img alt="Information" src="<?=$app_path?>/images/fff-icons/information.png?1354120685" valign="middle">
+                    Please note that you will be charged for unassigned IP addresses.
+                    <a href="http://wiki.bitnami.org/BitNami_Cloud_Hosting/Basics/AWS_Account#Is_Static_IP_address_free_of_charge.3f" target="_blank" title="Is Static IP address free of charge?">More info</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+        
+<?php include('create/CreateAppsDialog.html.php');?>
+        
+    </div>
+</div>
+
+<?php include('create/Create.js.php');?>
+<?php include('create/CreateNamesAndButtons.js.php');?>

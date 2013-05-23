@@ -1,0 +1,115 @@
+<!DOCTYPE html> 
+<?php include PORTABLE_PHTML; ?>
+<!--?php
+    $GLOBALS['app_path'] = $app_path;
+    // call from layout with just hrefAndSelected('link_name')
+    // only class='selected' if selected
+    function hrefAndSelected($link) {
+        global $app_path;
+
+        $s = "href='$app_path/$link'";
+        if ($link == '.') $link = '';    // work around href='' not working
+        // if URI ends with link
+        if ( $link == str_replace($app_path.'/', '', $_SERVER['REQUEST_URI']) )  
+            $s .= "class='selected'";
+        return $s;
+    }
+?-->
+<html> 
+<head> 
+    <?php include 'layout-head.phtml'; ?>
+    <?php include 'layout-head-for-panels.phtml'; ?>
+</head>
+
+<body class="page_container">
+<script>
+// blank screen while loading ugly html
+// had to put this here, didn't blank in console.js, 
+// unblank in console.js so it is after jquery-layout
+jWaiting(		
+    'Loading...',
+    {
+        autoHide : false, // added in v2.0
+        clickOverlay : false, // added in v2.0
+        HorizontalPosition : 'center',
+        VerticalPosition : 'center',
+        ColorOverlay : '#fff',			// color of the overlay
+        OpacityOverlay : 1.0,			// opacity of the overlay
+        ShowTimeEffect : 0,
+        HideTimeEffect : 200,
+        ShowOverlay : true
+    }
+);
+</script>
+    
+<!--div id="jWaiting" style="opacity: 1; min-width: 200px; top: 445.5px; left: 678px;">Loading...</div>
+<div id="jOverlay" style="background-color: rgb(255, 255, 255); opacity: 1;"></div-->
+<div id="header" class="ui-layout-north">
+    <div id="header_content">
+        <div id="top_nav">
+            <span><a href="<?=$app_path?>"><?=SERVICE_NAME?> Cloud Hosting</a></span>
+            <img src="<?=$app_path?>/images/orange_gt.png" alt="&gt;">
+            <span><a href="<?=$app_path?>/servers">Servers</a></span>
+        </div>
+        
+        <div id="user_settings">
+            <a title="English" href="<?=$app_path?>/servers">
+                <img src="<?=$app_images->flagIconPath?>/us.png" alt="Us"></a>
+            <a title="Spanish" href="<?=$app_path?>/es/servers">
+                <img src="<?=$app_images->flagIconPath?>/es.png" alt="Es"></a>
+            |
+            <b>Welcome, <?=$this->userEmail?></b>
+            |
+            <a rel="nofollow" data-method="delete" href="<?=$app_path?>/login/logout">Sign Out</a>
+        </div>
+        <br />
+        <?php include 'top-menu.phtml'; ?> 
+        
+        <!-- div id="status" class="ui-corner-bottom">
+            Please wait...
+        </div -->
+    </div>    
+    <div class="ui-layout-content"></div>
+</div>
+
+<div id="footer" class="ui-layout-south">
+    <?php include 'layout-foot.phtml'; ?>
+    <!--center class="tiny">
+        © 2012,
+        <a href="http://www<?=DNS_ZONE?>"><?=SERVICE_NAME?> Inc.</a>
+        All rights reserved.
+        <img class="footer_bar" align="absmiddle" src="<?=$app_path?>/images/footer_bar.png" alt="|">
+        <a class="helpdesk_link" target="_blank" href="http://www<?=DNS_ZONE?>">Support</a>
+        <img class="footer_bar" align="absmiddle" src="<?=$app_path?>/images/footer_bar.png" alt="|">
+        <a target="_blank" href="http://www<?=DNS_ZONE?>"> Privacy Policy </a>
+        <img class="footer_bar" align="absmiddle" src="<?=$app_path?>/images/footer_bar.png" alt="|">
+        <a target="_blank" href="http://www.infusionappdev.com"> Terms of Use </a>
+    </center-->
+</div>
+
+<div id="columns-west" class="ui-layout-west">
+    <?php include 'layout-west.phtml'; ?>
+</div>
+
+<!-- helpPath set in ActionPlugin -->
+<?php if (isset($this->helpFile)):?>
+<div id="columns-east" class="ui-layout-east">
+    <h2 class="header">Help</h2>
+    <!--div class="ui-layout-content help_content" style="position: relative; overflow: auto; 
+        padding: 0px 10px; visibility: visible;"-->
+    <div class="ui-layout-content help_content" style="padding: 0px 10px;">
+        <?php include $this->helpFile; ?>
+        <!-- ?=$this->layout()->help? -->
+        <!-- ?=$viewData->help? -->
+    </div>
+</div>
+<?php endif ?>
+
+<div id="splitted-content" class="ui-layout-center">
+    <!-- don't put splitted-content's ui-layout-center here
+         because ui-layout-south will need to be in content below -->
+    <?=$this->layout()->content?>
+</div>
+
+</body>
+</html>

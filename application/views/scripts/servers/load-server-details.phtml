@@ -1,0 +1,64 @@
+<?php include PORTABLE_PHTML; ?>
+
+<table style="margin-bottom:0" class="properties">
+    <tbody><tr>
+            <td valign="top" rowspan="4">
+                <img src="<?= $app_images->serverImagePath.'/'.$viewData->serverType->imageFilename ?>"> 
+            </td>
+            <th style="color: black" colspan="2" class="align_left">
+                <span class="stack_title">
+                    <?= $viewData->serverRec->serverName ?>
+                </span>
+            </th>
+        </tr>
+        <tr>
+            <th>Applications</th>
+            <td>
+                <span data-content-for-state="running stopped">
+                    <?php if ($viewData->appType->shortName == 'None'): ?>
+                        <?=$viewData->appType->longName?>
+                    <?php else: ?>
+                        <a id="AppConnectLink" href="#">
+                            <?= $viewData->appType->longName ?></a>
+                    <?php endif; ?>
+
+                </span>
+
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Lastest Backup
+            </th>
+            <td>
+                <span style="color: gray">Never</span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Estimated Cost
+            </th>
+            <td>
+                <span><span data-value-from="estimated_cost_hour"><?=$viewData->hourTotal?></span>/hour,
+                    <span data-value-from="estimated_cost_month"><?=$viewData->monthTotal?></span>/month 
+                    <img src="images/fff-icons/information.png" 
+                         data-tooltip-content="#cost_server" 
+                         class="tooltip_icon" alt="Information" data-tooltip-added="true"> 
+                    <div style="display:none" id="cost_server">
+                        <b>Disk:</b> <span data-value-from="estimated_cost_storage"><?=$viewData->diskCost?></span>/month<br>
+                        <b>Server:</b> <span data-value-from="estimated_cost_cpu"><?=$viewData->serverCost?></span>/month<br></div></span>
+            </td>
+        </tr>
+    </tbody></table>
+<div class="details_buttons">
+    <a id="go_to_server" target="_blank" href="http://<?=$viewData->serverRec->publicDNS.DNS_ZONE?>" >
+        Go to Server
+    </a>
+    <a id="manage_server" href="<?= $app_path ?>/servers/manage/<?= $viewData->serverRec->id ?>" >
+        Manage Server
+    </a>
+</div>
+
+<?php include('servers/app-connect-dialog.phtml'); ?>
+
+<?php include 'servers/load-server-details-js.phtml';?>

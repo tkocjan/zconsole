@@ -1,0 +1,453 @@
+<?php include PORTABLE_PHTML; ?>
+
+<div id="content" class="ui-layout-center">
+    <h2 class="header">Manage Server: <?= $viewData->serverRec->serverName ?></h2>
+    <?php include('manage/manage-toolbar.phtml'); ?>
+    <div class="ui-layout-content">
+        <div>
+            <canvas style="position: absolute; top: 10px; left: 26px;" height="116" width="1230"></canvas>
+            <div class="rounded" style="background: none repeat scroll 0% 0% transparent; 
+                 border: 0px none; position: relative;">
+                <table style="margin-bottom:0" class="properties full_width">
+                    <tbody><tr>
+                            <td style="padding: 5px; width: 100px;" rowspan="3">
+                                <img src="<?= $app_images->serverImagePath ?>/<?= $viewData->serverType->imageFilename ?>">
+                            </td>
+                            <th style="color: black" colspan="2" class="align_left">
+                                <span data-value-from="name" class="stack_title">
+                                    <?= $viewData->serverRec->serverName ?>
+                                </span>
+                                &nbsp;
+                                <a title="Rename Server" class="rename_server_link" 
+                                   onclick="renameDialog()" href="#">
+                                    <img src="<?= $app_images->pencilIcon ?>" alt="rename"></a>
+                                <?php include 'manage/rename-dialog.phtml'; ?>
+                    </th>
+                    </tr>
+                    <tr>
+                        <th style="width: 100px;">Applications</th>
+                        <td>
+                            <span data-content-for-state="running stopped">
+                                <?php if ($viewData->appType->shortName == 'None'): ?>
+                                    <?= $viewData->appType->longName ?>
+                                <?php else: ?>
+                                    <a id="AppConnectLink" href="#"><?= $viewData->appType->longName ?></a>
+                                <?php endif; ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="middle" style="vertical-align: middle; font-size: 12px;" colspan="2">
+                            <a title="Assign Public IP" data-operation="assign_ip" data-icon="gear" 
+                               data-enable-if-state="stopped running" data-button="true" 
+                               class="ui-popup ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" 
+                               href="/servers/assign_ip/14965" role="button">
+                                <span class="ui-button-icon-primary ui-icon ui-icon-gear"></span>
+                                <span class="ui-button-text">Assign IP</span></a>
+                            <a title="Resize Server" data-operation="resize" data-icon="gear" data-enable-if-state="stopped running" data-button="true" class="ui-popup ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="#" role="button"><span class="ui-button-icon-primary ui-icon ui-icon-gear"></span><span class="ui-button-text">Resize</span></a>
+                            <a title="How to connect to this machine ?" data-operation="connect_to_server" data-disable-if-state="deleted" data-button="true" class="ui-popup ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="#" role="button"><span class="ui-button-text">Connect</span></a>
+                            <a title="System console output" data-popup-class="server_log_popup" data-operation="server_log" data-disable-if-state="deleted" data-button="true" class="ui-popup ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="#" myhref="https://app.bitnamihosting.com/servers/14965/get_console_output" role="button"><span class="ui-button-text">System Log</span></a>
+                        </td>
+                    </tr>
+                    </tbody></table>
+            </div>
+            <div class="clear"></div>
+
+            <div style="border:0!important;" class="manage_server_tabs simple_tabs">
+                <ul>
+                    <li><a href="#properties_tab">Properties</a></li>
+                    <li><a href="#backups_tab">Backups</a></li>
+                    <li><a href="#tasks_tab">Scheduled Tasks</a></li>
+                    <li><a href="#monitoring_tab">Monitoring</a></li>
+                    <li><a href="#firewall_tab">Firewall</a></li>
+                    <li><a href="#notes_tab">Notes</a></li>
+                </ul>
+                <div id="monitoring_tab"></div>
+                <div id="backups_tab">
+                    <br>
+                    <table style="margin-top:0" id="latest-backups-list" data-refreshable-list="servers/14965/backups" class="properties">
+                        <tbody>
+                            <tr class="no_items">
+                                <td colspan="4">None</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="details_buttons">
+                        <a title="Create Backup" data-operation="create_backup" data-icon="disk" data-enable-if-state="stopped running" data-button="true" class="ui-popup ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="#" role="button"><span class="ui-button-icon-primary ui-icon ui-icon-disk"></span>
+                            <span class="ui-button-text">Create Backup</span></a>
+                                <div style="display:none;" class="ui-popup-content">
+                                <form width="600" novalidate="novalidate" method="post" 
+                                      id="new_backup" data-validation-warning-text="Please correct the errors on this form." 
+                                      data-validate="true" data-show-processing="true" 
+                                      class="no_intro_submit" action="/backups" accept-charset="UTF-8">
+                                    <div style="margin:0;padding:0;display:inline">
+                                        <input type="hidden" value="✓" name="utf8"><input type="hidden" value="G6cvWRgDi8pWoCBb/hhG+LrZGifDjxucR8nOBhyJKCY=" name="authenticity_token"></div>
+                                <table class="properties">
+                                    <tbody><tr>
+                                            <th style="width: 100px;">
+                                                Server
+                                            </th>
+                                            <td>
+                                                Ubu WordPress
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 100px;">
+                                                <label for="backup_name">Backup Name</label>
+                                            </th>
+                                            <td>
+                                                <input type="text" value="201211021810 Ubu WordPress" size="30" name="backup[name]" id="backup_name" data-validate="true">
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                <input type="hidden" value="14965" name="backup[server_id]" id="backup_server_id">
+                            </form>
+                        </div><a data-operation="show_all" data-icon="search" data-button="true" href="#" myhref="https://app.bitnamihosting.com/backups?by_server=14965&amp;reset_scope=true" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button"><span class="ui-button-icon-primary ui-icon ui-icon-search"></span><span class="ui-button-text">Show All</span></a>
+                    </div>
+                </div>
+                <div id="properties_tab">
+                    <br>
+                    <table style="margin-top:0; margin-bottom: 5px;" class="properties server_properties">
+                        <tbody><tr>
+                                <th>
+                                    Status
+                                </th>
+                                <td>
+                                    <span class="state_info">
+                                        <img src="<?= $app_images->statusIcon[$viewData->serverRec->status] ?>">
+                                        <?= $viewData->serverRec->status ?>
+                                        <span style="display:none;" data-content-for-state="processing">
+                                            <img align="absmiddle" title="" src="<?=$app_path?>/images/fff-icons/information.png" 
+                                                 data-title-from="processing_step_info" 
+                                                 data-hide-if-empty-field="processing_step_info" 
+                                                 class="tooltip_icon filtered_field" 
+                                                 alt="Information" data-tooltip-added="true">
+                                        </span> 
+                                        <a title="Server Status Details" data-show-processing="true" 
+                                           data-content-id="server-status-details" class=" ui-popup" 
+                                           href="#" myref="https://app.bitnamihosting.com/servers/14965/get_operations_log">
+                                            more info</a> 
+                                        <img align="absmiddle" title="" src="<?=$app_path?>/images/fff-icons/error.png" 
+                                             data-title-from="warning_message" 
+                                             data-hide-if-empty-field="warning_message" 
+                                             class="tooltip_icon filtered_field" alt="Error" 
+                                             data-tooltip-added="true"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>IP Address</th>
+                                <td>
+                                    <span data-hide-if-not-empty-field="static_ip" class="filtered_field">
+                                        <span data-hide-if-not-empty-field="public_ip" class="filtered_field">
+                                            Unassigned (Dynamic)
+                                        </span>
+                                        <span data-hide-if-empty-field="public_ip">
+                                            <?= $viewData->serverRec->publicIP ?>
+                                            <object width="110" height="14" id="clippy" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+                                                <param value="<?= $app_path ?>/assets/clippy.swf" name="movie">
+                                                <param value="opaque" name="wmode">
+                                                <param value="always" name="allowScriptAccess">
+                                                <param value="high" name="quality">
+                                                <param value="noscale" name="scale">
+                                                <param value="text=184.169.178.182" name="FlashVars">
+                                                <param value="#FFFFFF" name="bgcolor">
+                                                <embed width="110" height="14" bgcolor="#FFFFFF" 
+                                                       flashvars="text=184.169.178.182" 
+                                                       pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" wmode="opaque" name="clippy" src="<?= $app_path ?>/assets/clippy.swf">
+                                            </object>
+
+                                        </span>
+                                    </span>
+                                    <span data-hide-if-empty-field="static_ip">
+                                        <?= $viewData->serverRec->publicIP ?>
+                                        <object width="110" height="14" id="clippy" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+                                            <param value="<?= $app_path ?>/assets/clippy.swf" name="movie">
+                                            <param value="opaque" name="wmode">
+                                            <param value="always" name="allowScriptAccess">
+                                            <param value="high" name="quality">
+                                            <param value="noscale" name="scale">
+                                            <param value="text=184.169.178.182" name="FlashVars">
+                                            <param value="#FFFFFF" name="bgcolor">
+                                            <embed width="110" height="14" bgcolor="#FFFFFF" flashvars="text=184.169.178.182" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" wmode="opaque" name="clippy" src="<?= $app_path ?>/assets/clippy.swf">
+                                        </object>
+
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr data-hide-if-empty-field="main_public_dns">
+                                <th>
+                                    Public DNS
+                                </th>
+                                <td>
+                                    <a target="_blank" href="http://<?= $viewData->serverRec->publicDNS.DNS_ZONE ?>">
+                                        <?= $viewData->serverRec->publicDNS.DNS_ZONE ?></a>
+                                    <a title="Rename Server" class="rename_server_link"
+                                       onclick="renameDialog()"
+                                       href="#" data-content-for-state="running stopped">
+                                        <img src="<?= $app_images->pencilIcon ?>" alt="edit"></a>
+                                    <object width="110" height="14" id="clippy" 
+                                            classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+                                        <param value="<?= $app_path ?>/assets/clippy.swf" name="movie">
+                                        <param value="opaque" name="wmode">
+                                        <param value="always" name="allowScriptAccess">
+                                        <param value="high" name="quality">
+                                        <param value="noscale" name="scale">
+                                        <param value="text=<?= $viewData->serverRec->publicDNS.DNS_ZONE ?>" name="FlashVars">
+                                        <param value="#FFFFFF" name="bgcolor">
+                                        <embed width="110" height="14" bgcolor="#FFFFFF" 
+                                               flashvars="text=<?= $viewData->serverRec->publicDNS.DNS_ZONE ?>" 
+                                               pluginspage="http://www.macromedia.com/go/getflashplayer" 
+                                               type="application/x-shockwave-flash" allowscriptaccess="always" 
+                                               quality="high" wmode="opaque" name="clippy" 
+                                               src="<?= $app_path ?>/assets/clippy.swf">
+                                    </object>
+
+                                </td>
+                            </tr>
+                            <tr><th>Operating System</th>
+                                <td>
+                                    <img align="absmiddle" title="<?= $viewData->osType->longName ?>" 
+                                         src="<?= $app_images->osIconPath . '/' . $viewData->osType->iconFilename ?>" 
+                                         alt="<?= $viewData->osType->longName ?>">  
+                                         <?= $viewData->osType->longName ?>
+                                </td>
+                            </tr>
+                            <tr><th>Server Location</th>
+                                <td>
+                                    <img align="absmiddle" 
+                                         src="<?= $app_images->flagIconPath . '/' . $viewData->locationType->iconFilename ?>"
+                                         alt="<?= $viewData->locationType->shortName ?>">
+                                         <?= $viewData->locationType->longName ?>
+                                </td>
+                            </tr>
+                            <tr><th>Estimated Cost</th>
+                                <td>
+                                    <?=$viewData->hourTotal?>/hour, <?=$viewData->monthTotal?>/month 
+                                    <img src="<?= $app_images->infoIcon ?>" data-tooltip-content="#cost_server" 
+                                         class="tooltip_icon" alt="Information" data-tooltip-added="true"> 
+                                    <div style="display:none" id="cost_server">
+                                        <b>Disk:</b> <?=$viewData->diskCost?>/month<br>
+                                        <b>Server:</b> <?=$viewData->serverCost?>/month<br></div>
+                                </td>
+                            </tr>
+
+                            <?php if ($viewData->appType->shortName != 'None'): ?>                            
+                                <tr>
+                                    <th>Application Login</th>
+                                    <td><?= $viewData->serverRec->appLogin ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Application Password</th>
+                                    <td style="color:#333">
+                                        <span style="display:none;" class="password_toggle">
+                                            <?= $viewData->serverRec->appPassword ?>
+                                            <object width="110" height="14" id="clippy" 
+                                                    classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+                                                <param value="<?= $app_path ?>/assets/clippy.swf" name="movie">
+                                                <param value="opaque" name="wmode">
+                                                <param value="always" name="allowScriptAccess">
+                                                <param value="high" name="quality">
+                                                <param value="noscale" name="scale">
+                                                <param value="text=<?= $viewData->serverRec->appPassword ?>" name="FlashVars">
+                                                <param value="#FFFFFF" name="bgcolor">
+                                                <embed width="110" height="14" bgcolor="#FFFFFF" 
+                                                       flashvars="text=<?= $viewData->serverRec->appPassword ?>" 
+                                                       pluginspage="http://www.macromedia.com/go/getflashplayer" 
+                                                       type="application/x-shockwave-flash" 
+                                                       allowscriptaccess="always" quality="high" 
+                                                       wmode="opaque" name="clippy" src="<?= $app_path ?>/assets/clippy.swf">
+                                            </object>
+
+                                        </span>
+                                        <span class="password_toggle">
+                                            ********
+                                            <a onclick="$(this).closest('td').children('.password_toggle').toggle(); return false;" href="#">show</a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+
+                            <tr class="filtered">
+                                <th>Server Type</th>
+                                <td><?= $viewData->serverType->longName ?></td></tr>
+                            <tr class="filtered"><th>Disk Size</th>
+                                <td><?= $viewData->serverRec->diskSize ?> GB</td></tr>
+                            <tr data-hide-if-empty-field="created_at" class="filtered">
+                                <th>Created</th>
+                                <td>
+                                    <span data-value-from="created_at_ago">30 days ago</span> 
+                                    <img align="absmiddle" title="<?= $viewData->serverRec->dateCreated ?> UTC" 
+                                         src="<?= $app_images->infoIcon ?>" 
+                                         data-hide-if-empty-field="created_at" class="tooltip_icon " 
+                                         alt="Information" data-tooltip-added="true">
+                                </td>
+                            </tr>
+
+                            <tr data-hide-if-empty-field="started_at" class="filtered">
+                                <th>Last Started</th>
+                                <td>
+                                    <span data-value-from="started_at_ago">28 days ago</span> 
+                                    <img align="absmiddle" title="<?= $viewData->serverRec->lastStart ?> UTC" 
+                                         src="<?= $app_images->infoIcon ?>" 
+                                         data-hide-if-empty-field="started_at" class="tooltip_icon " 
+                                         alt="Information" data-tooltip-added="true">
+                                </td>
+                            </tr>
+
+                            <tr data-hide-if-empty-field="stopped_at" class="filtered">
+                                <th>Last Stopped</th>
+                                <td>
+                                    <span data-value-from="stopped_at_ago">28 days ago</span> 
+                                    <img align="absmiddle" title="<?= $viewData->serverRec->lastStop ?> UTC"
+                                         src="<?= $app_images->infoIcon ?>" 
+                                         data-hide-if-empty-field="stopped_at" class="tooltip_icon " 
+                                         alt="Information" data-tooltip-added="true">
+                                </td>
+                            </tr>
+
+                            <tr data-hide-if-empty-field="instance_id" class="filtered">
+                                <th>Server ID</th>
+                                <td><?= $viewData->serverRec->hosterServerCode ?></td></tr>
+
+                            <tr data-hide-if-empty-field="private_ip" class="filtered">
+                                <th>Private IP</th>
+                                <td>
+                                    <?= $viewData->serverRec->privateIP ?>
+                                    <object width="110" height="14" id="clippy" 
+                                            classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+                                        <param value="<?= $app_path ?>/assets/clippy.swf" name="movie">
+                                        <param value="opaque" name="wmode">
+                                        <param value="always" name="allowScriptAccess">
+                                        <param value="high" name="quality">
+                                        <param value="noscale" name="scale">
+                                        <param value="text=10.170.133.174" name="FlashVars">
+                                        <param value="#FFFFFF" name="bgcolor">
+                                        <embed width="110" height="14" bgcolor="#FFFFFF" 
+                                               flashvars="text=<?= $viewData->serverRec->privateIP ?>" 
+                                               pluginspage="http://www.macromedia.com/go/getflashplayer" 
+                                               type="application/x-shockwave-flash" allowscriptaccess="always" 
+                                               quality="high" wmode="opaque" name="clippy" 
+                                               src="<?= $app_path ?>/assets/clippy.swf">
+                                    </object>
+                                </td>
+                            </tr>
+
+                            <tr data-hide-if-empty-field="cloud_id" class="filtered">
+                                <th>
+                                    Cloud Account
+                                </th>
+                                <td data-template-for-cloud_id="&lt;img alt=&quot;Target-aws&quot; src=&quot;<?=$app_path?>/images/logo-target/target-aws.png?1351003260&quot; /&gt; &lt;a href=&quot;https://app.bitnamihosting.com/clouds?items%5B%5D=7968&quot;&gt;My AWS Account&lt;/a&gt;">
+                                    <img src="<?=$app_path?>/images/logo-target/target-aws.png?1351003260" alt="Target-aws"> <a href="<?=$app_path?>/clouds">My AWS Account</a>
+                                </td>
+                            </tr>
+                            <tr class="filtered">
+                                <th>Termination Protection</th>
+                                <td data-template-for-termination_protection="Disabled
+                                    &lt;img align=&quot;absmiddle&quot; alt=&quot;Information&quot; class=&quot;tooltip_icon &quot; icon=&quot;information&quot; src=&quot;<?=$app_path?>/images/fff-icons/information.png?1351003260&quot; title=&quot;Termination protection prevents accidental deletion of a server by requiring to explicitly disable it first&quot; /&gt;
+                                    &lt;a data-method=&quot;put&quot; data-show-processing=&quot;true&quot; href=&quot;https://app.bitnamihosting.com/servers/14965?server%5Btermination_protection%5D=true&quot;&gt;Enable&lt;/a&gt;">
+                                    Disabled
+                                    <img align="absmiddle" 
+                                         title="Termination protection prevents accidental deletion of a server by requiring to explicitly disable it first" 
+                                         src="<?=$app_path?>/images/fff-icons/information.png?1351003260" 
+                                         icon="information" class="tooltip_icon " alt="Information" 
+                                         data-tooltip-added="true">
+                                    <a href="#" myhref="https://app.bitnamihosting.com/servers/14965?server%5Btermination_protection%5D=true" data-show-processing="true" data-method="put">Enable</a>
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                    <p><a id="more_details" style="margin-left: 20px; font-size: 12px" data-toggle-filtered=".server_properties" 
+                          href="#">more details</a></p>
+                    <div class="clear"></div>
+                </div>
+                <div id="tasks_tab">
+                    <br>
+                    <div style="display:none" class="manage_server_task">
+                        <div class="ui-widget-header ui-corner-all new_server_header ">
+                            <span class="ui-icon ui-icon-fff-calendar"></span>Scheduled Backup</div>
+                        <table class="properties">
+                            <tbody><tr>
+                                    <th>Not configured</th></tr>
+                            </tbody></table>
+                    </div>
+                    <div style="display:none" class="manage_server_task">
+                        <div class="ui-widget-header ui-corner-all new_server_header ">
+                            <span class="ui-icon ui-icon-fff-calendar"></span>Scheduled Server</div>
+                        <table class="properties">
+                            <tbody><tr>
+                                    <th>Not configured</th>
+                                </tr>
+                            </tbody></table>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="manage_server_task">
+                        <div class="details_buttons">
+                            <div class="right">
+                                <a data-operation="Schedule Backup" data-icon="calendar" 
+                                   data-disable-if="deleted" data-button="true" 
+                                   href="#" myhref="https://app.bitnamihosting.com/scheduled_tasks/new?back=%2Fservers%2F14965%2Fmanage%23tasks&amp;scheduled_task%5Bserver_id%5D=14965&amp;scheduled_task%5Btask_type%5D=backup" 
+                                   class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" 
+                                   role="button">
+                                    <span class="ui-button-icon-primary ui-icon ui-icon-calendar"></span>
+                                    <span class="ui-button-text">Schedule Backup</span></a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div style="display:none" class="manage_server_task">
+                        <div class="details_buttons">
+                            <div class="right">
+                                <a data-operation="Schedule Server" data-icon="calendar" 
+                                   data-disable-if="deleted" data-button="true" 
+                                   href="#" myhref="https://app.bitnamihosting.com/scheduled_tasks/new?back=%2Fservers%2F14965%2Fmanage%23tasks&amp;scheduled_task%5Bserver_id%5D=14965&amp;scheduled_task%5Btask_type%5D=server" 
+                                   class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" 
+                                   role="button">
+                                    <span class="ui-button-icon-primary ui-icon ui-icon-calendar"></span>
+                                    <span class="ui-button-text">Schedule Server</span></a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                    <div class="clear"></div>
+                </div>
+                <div id="firewall_tab"></div>
+                <div id=""></div>
+                <div id="notes_tab">
+                    <br>
+                    <div style="padding-left: 16px;">
+                        <br /><?= $viewData->serverRec->notes ?><br /><br />
+                    </div>
+                    <div class="details_buttons">
+                        <a title="Edit Server Notes" data-operation="edit" data-icon="pencil" 
+                           data-enable-if="one" data-button="true" 
+                           class="ui-popup ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" 
+                           href="#" role="button">
+                            <span class="ui-button-icon-primary ui-icon ui-icon-pencil"></span>
+                            <span class="ui-button-text">Edit</span></a><div style="display:none;" 
+                                                                         class="ui-popup-content">
+                            <form width="400" method="post" id="edit_server_14965" class="edit_server" 
+                                  action="/servers/14965" accept-charset="UTF-8">
+                                <div style="margin:0;padding:0;display:inline">
+                                    <input type="hidden" value="✓" name="utf8">
+                                    <input type="hidden" value="put" name="_method">
+                                    <input type="hidden" value="G6cvWRgDi8pWoCBb/hhG+LrZGifDjxucR8nOBhyJKCY=" name="authenticity_token">
+                                </div>
+                                <input type="hidden" value="14965" name="server[id]" id="server_id">
+                                <input type="hidden" value="/servers/14965/manage#notes" name="back" id="back">
+                                <textarea rows="6" name="server[description]" id="server_description" cols="40">
+                                    WordPress 3.4.2-0</textarea>
+                            </form>
+
+                        </div></div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include('servers/app-connect-dialog.phtml');?>
+
+<?php include('manage/manage-js.phtml');?>

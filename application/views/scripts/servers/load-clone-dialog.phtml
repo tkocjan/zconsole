@@ -1,0 +1,49 @@
+<?php include PORTABLE_PHTML; ?>
+
+<form title="Clone Server" style="width:700" method="post" 
+    id="cloneServerForm" style="display: none" class="cloneServer" 
+    action="/servers/14965" accept-charset="UTF-8">
+    <div class="error" style="display:none"><span></span></div>
+    <div style="margin:0;padding:0;display:inline">
+        <table style="width: 100%" class="properties">
+            <tbody><tr style="vertical-align: top;">
+                    <th style="width: 120px;">
+                        <label for="cloneServerName">Name</label></th>
+                    <td>
+                        <input type="text" value="<?=$viewData->cloneName?>"
+                            name="cloneServerName" id="cloneServerName" size="40"
+                            title="" field="serverName"
+                            class="ui-widget-content ui-corner-all"
+                            type="text" required="" />
+                        <img title="One line description of the server, it must be unique." 
+                            src="<?=$app_images->helpIcon?>" /></td>
+                </tr>
+                <tr style="vertical-align: top;">
+                    <th>
+                        <label for="clonePublicDNS">Domain Name</label></th>
+                    <td>
+                        <input type="text" value="<?=$viewData->cloneDNS?>" 
+                            id="clonePublicDNS" size="40" name="clonePublicDNS" 
+                            title="" field="clonePublicDNS"
+                            class="ui-widget-content ui-corner-all"
+                            type="text" required="" />
+                        <?=DNS_ZONE?>
+                        <img title="Please choose your Domain Name." 
+                            src="<?=$app_images->helpIcon?>" /></td>
+                </tr>
+                <tr style="vertical-align: top;">
+                    <th>
+                        <label for="cloneHosterTypeId">Cloud Account</label></th>
+                    <td>
+                            <select name="clone" id="cloneCloudAccountId" 
+                                    class="new_server_cloud_selector ui-widget-content ui-corner-all">
+                                <option selected="selected" value="7968">My AWS Account</option>
+                            </select>                        
+                        <img title="Cloud credentials to use for this server." 
+                            src="<?=$app_images->helpIcon?>" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+<?php include 'servers/load-clone-dialog-js.phtml'; ?>
