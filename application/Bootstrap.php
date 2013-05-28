@@ -19,7 +19,12 @@ define('DB_HOSTNAME', 'localhost');
 define('DB_PORT', '3306');
 define('DB_DATABASE', 'console');
 define('DB_USERNAME', 'app');
-define('DB_PASSWORD', 'password');
+if ($_SERVER['HTTP_HOST'] == 'www.local') {
+    define('DB_PASSWORD', 'password');
+}
+else {
+    define('DB_PASSWORD', 'timpfx');
+}
 
 $logger = null;
 $app_path = null;
