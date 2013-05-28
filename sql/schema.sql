@@ -33,7 +33,7 @@ CREATE TABLE ServerRec (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE cloudAccountRec (
+CREATE TABLE CloudAccountRec (
   id                INT UNSIGNED           NOT NULL   AUTO_INCREMENT,
   customerId       INT UNSIGNED           NOT NULL,
   cloudAccountName              VARCHAR(255)    NOT NULL,

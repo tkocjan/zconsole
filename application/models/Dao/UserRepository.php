@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_Dao_UserRepository extends Application Model_Repository {
+class Application_Model_Dao_UserRepository extends Application_Model_Repository {
     private $entity;
     
     public function getEntity() {

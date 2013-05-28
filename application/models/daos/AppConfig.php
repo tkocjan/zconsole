@@ -37,7 +37,7 @@ class AppConfig
         $ca['appTypes'] = $this->appTypes =  $dao->getObjectArray();
         $dao = new ServerType();
         $ca['serverTypes'] = $this->serverTypes =  $dao->getObjectArray();
-        $dao = new OsType();
+        $dao = new OSType();
         $ca['osTypes'] = $this->osTypes =  $dao->getObjectArray();
         $dao = new LocationType();
         $ca['locationTypes'] = $this->locationTypes =  $dao->getObjectArray();
@@ -49,7 +49,7 @@ class AppConfig
         $ca['serverTypes'] = $this->serverTypes =  
             $domainService->findAll('ServerType');
         $ca['osTypes'] = $this->osTypes =
-            $domainService->findAll('OsType');
+            $domainService->findAll('OSType');
         $ca['locationTypes'] = $this->locationTypes =
             $domainService->findAll('LocationType');
         
