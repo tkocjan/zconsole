@@ -12,7 +12,7 @@ defined('APPLICATION_ENV')
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),
-    realpath(APPLICATION_PATH . '/../../zend'),
+    realpath(APPLICATION_PATH . '/../../libphp'),
     realpath(APPLICATION_PATH . '/models/daos'),
     get_include_path(),
 )));
