@@ -24,15 +24,15 @@ class Application_Plugin_ControllerPlugin extends Zend_Controller_Plugin_Abstrac
         if (!DO_AUTH)
             return;
         
-        Logger::info(__METHOD__.': action='.$req->getActionName());
+        //Logger::info(__METHOD__.': action='.$req->getActionName());
         
         $action = $req->getActionName();
         if ($action == 'login' || $action == 'sign-in' || $action == 'logout')
             return;
         
         $ns = new Zend_Session_Namespace('Default');
-        foreach ($ns as $index => $value)
-            Logger::info(__METHOD__.': Default Session: '.$index.'='.$value);
+        //foreach ($ns as $index => $value)
+        //    Logger::info(__METHOD__.': Default Session: '.$index.'='.$value);
         if (!isset($ns->userId))
             $this->_response->setRedirect($app_path.'/login');
     }

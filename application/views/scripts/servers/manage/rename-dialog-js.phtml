@@ -1,18 +1,16 @@
-<script id="cloneScript">
+<script>
     var errorClassName = "error";
     var validClassName = "valid";
     var loadingClassName = "ui-icon-loading";
 //    var jqFields = $(":text", "#rename_server_form");
 //    var jqlabels = $("label[for]", "#rename_server_form");
-    //var jqFields = $("#rename_server_form :text");
-    var jqLabels = $("#cloneServerForm label[for]");
-    var jqForm = $("#cloneServerForm");
-    var jqServerName = $("#cloneServerName");
-    var jqPublicDNS = $("#clonePublicDNS");
-    var jqFields = jqServerName.add(jqPublicDNS);
-    
+    var jqFields = $("#rename_server_form :text");
+    var jqLabels = $("#rename_server_form label[for]");
+    var jqForm = $("#rename_server_form");
+
     //$(".rename_server_link").on('click', function(event){
-    function cloneDialog() {
+    function renameDialog() {
+        jqForm[0].reset();
         jqFields.addClass(validClassName).removeClass(errorClassName).removeClass(loadingClassName)
             .attr("title", "");
         jqLabels.removeClass(errorClassName);
@@ -20,12 +18,18 @@
             width: 700,
             modal: true,
             buttons: {
-                "Cancel": function(){jqForm.dialog("destroy");},
+                "Cancel": function() {jqForm.dialog("destroy");},
                 "Ok": waitCheckName
             }
         });
 
-        var secs=0, maxSecs=10;
+        /*
+        function cancelDialog(){
+        
+        }
+        */
+        
+        var secs=0, maxSecs=5;
         function waitCheckName(){
             //if (!jqForm.dialog("isOpen")) { // causes exception... which is kind of ok
             //if form destroyed
@@ -46,7 +50,7 @@
             //if max reached
             if (secs >= maxSecs) {
                 secs=0;
-                alert("waitCheckName: Timed out");
+                alert("Timed out waiting for server!");
                 //jqForm.dialog("enable");
                 return;
             }
@@ -61,10 +65,18 @@
                 //jqForm.dialog("enable");
                 return;
             }
-            console.log("Form valid");
+            console.log("Form OK!");
+
+            jqServerName = $("#serverName");
+            jqPublicDNS = $("#publicDNS");
+            if ( jqServerName.val() == jqServerName[0].defaultValue &&
+                 jqPublicDNS.val() == jqPublicDNS[0].defaultValue ) {
+                jqForm.dialog("destroy");
+                return;
+            }
             
             jWaiting(		
-                'Launching Server...',
+                'Renaming Server...',
 		{
 		  autoHide : false, // added in v2.0
 		  clickOverlay : false, // added in v2.0
@@ -76,28 +88,23 @@
             
             $.ajax({
                 type: "post",
-                url: "<?=$app_path?>/ajax/clone-server",
+                url: "<?=$app_path?>/ajax/update-names",
                 data: {
-                    serverId: <?=$viewData->serverRec->id?>,
+                    serverId: "<?=$viewData->serverRec->id?>",
                     serverName: jqServerName.val(),
                     publicDNS: jqPublicDNS.val()
                 },
                 dataType: "json",
-                timeout: 10000,
                 success: function(data) {
-                    if (data.success != true) {
-                        $.jNotify._close();
-                        alert("cloneServer: Server returned false");
-                        return;
-                    }
-                    location.assign('<?=$app_path?>/servers');
+                    if (data.success != true)
+                        alert("updateNames failed!")
+                    location.reload(true);
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    $.jNotify._close();
-                    alert("cloneServer: Ajax failure");
-                    return;
+                failure: function() {
+                    alert("Ajax updateNames failure");
+                    location.reload(true);
                 }
-            });            
+            });
         }
     }
 
@@ -134,8 +141,8 @@
     }
 
     function unhighlight(element, errorClass, validClass, doAjax) { // added doAjax to normal args
-        console.log("unhighlight: id=" + element.id+" errorClass="+errorClass+" validClass="+validClass);
         var saveElement = element;
+        console.log("unhighlight: id=" + element.id+" errorClass="+errorClass+" validClass="+validClass);
         if (typeof(doAjax)==='undefined') doAjax = true;
 
         $(element).attr("title", "");
@@ -157,14 +164,14 @@
             type: "get",
             url: "<?=$app_path?>/ajax/check-name",
             data: {
-                form: "clone",
-                serverId: selServerId,
-                field: element.getAttribute('field'),
+                form: "rename",
+                serverId: "<?=$viewData->serverRec->id?>",
+                field: element.id,
                 value: element.value
             },
             dataType: "json",
-            timeout: 10000,
             success: function(data) {
+                console.log("success: saveElement="+saveElement.id);
                 console.log("success: field="+data.field+" error="+data.error);
                 if (data.error == "")
                     unhighlight(saveElement, errorClassName, validClassName, false);
@@ -173,12 +180,10 @@
                     //errorPlacement expects error in tags
                     errorPlacement("<span>"+data.error+"</span>", saveElement);
                 }
+            },
+            failure: function(data) {
+                console.log("Ajax checkName failure");
             }
-            /*
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert("checkName: Ajax failure: "+textStatus);
-            }
-            */
         });
     }
 

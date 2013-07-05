@@ -13,6 +13,7 @@ $(document).ready(function(){
 
   myGrid.jqGrid({
     url:'<?=$app_path?>/ajax/get-servers-grid',
+    //url:'http://localhost/console/ajax/getServersGrid',     //CORS: server: header('Access-Control-Allow-Origin: *');
     datatype: 'xml',
     mtype: 'GET',
     autowidth: true,
@@ -55,7 +56,6 @@ $(document).ready(function(){
     //onSelectRow: doSelectRow,
     onSelectRow: function(id, status) {
         console.log("Row selected: " + id + " " + status);
-        console.log("innerWidth=" + innerWidth);
         
         selServerId = null;
         selServerName = null;   //set in serverDetails
@@ -109,43 +109,4 @@ $(document).ready(function(){
   }); 
   
 }); 
-
-/*
-function doSelectRow(id, status) {
-    console.log("Row selected:" + id + " " + status);
- 
-    var selServerIds = $('#server_grid').jqGrid('getGridParam', 'selarrrow');
-    if (selServerIds.length != 1) {
-        $("#details_container").html('<p>Select an element to show its details.</p>');
-        return;
-    }
- 
-    // only one selected -- update details
-    console.log("Got here");
-    $("#details_container").html(
-        '<p><img align="absmiddle" src="<?=$app_path?>/images/preloader-icon.gif">Loading...</p>');
-    $("#details_container").load("<?=$app_path?>/ajax/serverDetails?id=" + id);
-    return;
-}
-*/
-/*
-$('#grid_container').bind('resize', function() {
-
-    // Get width of parent container
-    var width = $('#grid_container').attr('clientWidth');
-    if (width == null || width < 1){
-        // For IE, revert to offsetWidth if necessary
-        width = $('#grid_container').attr('offsetWidth');
-    }
-    width = width - 2; // Fudge factor to prevent horizontal scrollbars
-    if (width > 0 &&
-        // Only resize if new width exceeds a minimal threshold
-        // Fixes IE issue with in-place resizing when mousing-over frame bars
-        Math.abs(width - $('#server_grid').width()) > 5)
-    {
-        $('#server_grid').setGridWidth(width);
-    }
-
-}).trigger('resize');
-*/
 </script>

@@ -1,9 +1,9 @@
 <script>
 $(document).ready(function(){
-    var nameCancel = false;
+    var cancelCreate = false;
     $('a[data-operation="cancel"]').button({ icons: {secondary: "ui-icon-cancel-color"} })
         .on('click', function(){
-           nameCancel = true;
+           cancelCreate = true;
            var cancelElement = this; 
            $('#CancelDialog').dialog({
                 width: 400,
@@ -26,9 +26,9 @@ $(document).ready(function(){
     function waitCheckName(){
         //if (!jqForm.dialog("isOpen")) { // causes exception... which is kind of ok
         //if form destroyed
-        if ( nameCancel ) {
+        if ( cancelCreate ) {
             secs=0;
-            nameCancel = false;
+            cancelCreate = false;
             return;
         }
         //jqForm.dialog("disable");

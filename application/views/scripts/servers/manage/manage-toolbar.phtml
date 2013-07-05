@@ -22,57 +22,5 @@
 
     <div id="loadCloneDialog"></div>
 
-    <script>            
-        var selServerId = <?=$viewData->serverRec->id?>;
-        
-        $("#servers_refresh").on('click', function() {location.reload(true);});
-        $("#servers_help").on('click', function() {myLayout.toggle('east');});
-        
-        $("#servers_stop").on('click', function() {startStopServer(<?=$viewData->serverRec->id?>, "Stop")} );
-        $("#servers_start").on('click', function() {startStopServer(<?=$viewData->serverRec->id?>, "Start")} );
-        $("#servers_restart").on('click', function() {startStopServer(<?=$viewData->serverRec->id?>, "Restart")} );
-        
-        $("#servers_clone").on('click', loadCloneDialog);
-        $("#servers_delete").on('click', function () {deleteServers([selServerId]);}); //pass array
-        
-        $("#servers_close").button({ icons: {primary: "ui-icon-close"} });
-        //$("#servers_manage").button({ icons: {primary: "ui-icon-gear"} });
-        $("#servers_start").button({ icons: {primary: "ui-icon-play"} });
-        $("#servers_stop").button({ icons: {primary: "ui-icon-stop"} });
-        $("#servers_restart").button({ icons: {primary: "ui-icon-refresh"} });
-        $("#servers_delete").button({ icons: {primary: "ui-icon-trash"} });
-        $("#servers_clone").button({ icons: {primary: "ui-icon-copy"} });
-        //$("#servers_filter").button({ icons: {primary: "ui-icon-search"} });
-        $("#servers_refresh").button({ icons: {primary: "ui-icon-refresh"} });
-        $("#servers_help").button({ icons: {primary: "ui-icon-help"} });
-
-        // set toolbar state
-        $(".default_off").button("disable");
-        
-        setManageToolbarState("<?=$viewData->serverRec->status?>");
-        
-        function loadCloneDialog() {
-            console.log("loadCloneDialog: entry");
-            jqLoadClone = $("#loadCloneDialog");                
-            $("#loadCloneDialog").load(
-                "<?=$app_path?>/servers/load-clone-dialog",
-                {serverId: selServerId},
-                function() {cloneDialog()} // cloneDialog is not known when script runs
-            );
-        }
-
-        function setManageToolbarState(status) {
-            $(".default_off").button("disable");
-            $(".single_on").button("enable");
-            
-            //set start, stop, restart depending on status
-            if (status == 'Running')
-                $(".running_on").button("enable");
-            else
-                $(".stopped_on").button("enable");
-            
-            return;
-        }
-        
-    </script>
+<?php include('manage-toolbar-js.phtml'); ?>
     

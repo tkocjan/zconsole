@@ -1,40 +1,22 @@
-                        <script>
-                            /*
-                            $(".application_connect").dialog({
-                                width: 450,
-                                modal: true,
-                                autoOpen: false,
-                                buttons: {
-                                    "Close": function() {$(this).dialog("close");},
-                                    "Go to Admin": function() {
-                                        window.open(
-                                            "http://<?=$viewData->serverRec->publicDNS.DNS_ZONE.$viewData->appType->adminPath?>", 
-                                            "_blank");
-                                    },
-                                    "Go to Application": function() {
-                                        window.open("http://<?=$viewData->serverRec->publicDNS.DNS_ZONE?>.", "_blank");
-                                    }
-                                }
-                            });
-                            $(".ui-popup").on('click', function(event){
-                                $(".application_connect").dialog("open");
-                            });
-                            */
-                            function appConnectDialog(event){
-                                $(".application_connect").dialog({
-                                    width: 450,
-                                    modal: true,
-                                    buttons: {
-                                        "Close": function() {$(this).dialog("destroy");},
-                                        "Go to Admin": function() {
-                                            window.open(
-                                                "http://<?=$viewData->serverRec->publicDNS.DNS_ZONE.$viewData->appType->adminPath?>", 
-                                                "_blank");
-                                        },
-                                        "Go to Application": function() {
-                                            window.open("http://<?=$viewData->serverRec->publicDNS.DNS_ZONE?>", "_blank");
-                                        }
-                                    }
-                                });
-                            }
-                        </script>
+<script>
+    function appConnectDialog(event){
+        $(".application_connect").dialog({
+            width: 450,
+            modal: true,
+            buttons: {
+                "Close": function() {$(this).dialog("destroy");},
+                "Go to Admin": function() {
+                    window.open(
+                        "http://<?=$viewData->serverRec->publicDNS.DNS_ZONE
+                                    .$viewData->appType->adminPath?>", 
+                        "_blank");
+                },
+                "Go to Application": function() {
+                    window.open(
+                        "http://<?=$viewData->serverRec->publicDNS.DNS_ZONE?>", 
+                        "_blank");
+                }
+            }
+        });
+    }
+</script>
