@@ -1,13 +1,14 @@
 <script type="text/javascript">
+var myGrid = $("#server_grid");
+
 var selServerId = null,
-    selServerIds = [],
-    selServerName = null,   //set in serverDetails
-    selPublicDNS = null,    //ditto
-    selCloudAccountId = null;   //ditto
+    selServerIds = [];
+    //selServerName = null,   //set in serverDetails
+    //selPublicDNS = null,    //ditto
+    //selCloudAccountId = null;   //ditto
 
 $(document).ready(function(){ 
-    var myGrid = $("#server_grid"),
-        jqLoading = $("#details-loading"),
+    var jqLoading = $("#details-loading"),
         jqContents = $("#details-contents"),        
         jqEmpty = $("#details-empty");
 
@@ -54,29 +55,25 @@ $(document).ready(function(){
         });
     },
     //onSelectRow: doSelectRow,
-    onSelectRow: function(id, status) {
-        console.log("Row selected: " + id + " " + status);
+    onSelectRow: function(id, isSelected) {
+        console.log("Row selected: " + id + " " + isSelected);
         
-        selServerId = null;
-        selServerName = null;   //set in serverDetails
-        selPublicDNS = null;    //ditto
-        selCloudAccountId = null;   //ditto
+        //selServerId = null;
+        //selServerName = null;   //set in serverDetails
+        //selPublicDNS = null;    //ditto
+        //selCloudAccountId = null;   //ditto
 
         selServerIds = $(this).jqGrid('getGridParam', 'selarrrow');
-        //var status;
-
-        if (selServerIds.length > 0) {
-            var selRow = myGrid.jqGrid('getRowData', selServerIds[0]);
-            console.log("search = " + selRow['status'].search('Running') );
-            // text search the cell
-            if (selRow['status'].search('Running') >= 0)
-                status = 'Running';
-            else
-                status = 'Stopped';
-        }
-        console.log("status = " + status );
-        setServerToolbarState(selServerIds, status);
+        selServerId = selServerIds.length == 1 ? selServerIds[0] : null;
         
+        $(document).trigger("selServerIdsChange");
+        return;
+    }
+  }); 
+  
+  //load server details selServerIdsChanged listener
+  $(document).on("selServerIdsChange", function(e) {
+        console.log("selServerIds.length="+selServerIds.length);
         if (selServerIds.length != 1) {
             cancelLoad = true;
             jqLoading.addClass("filtered");
@@ -105,8 +102,7 @@ $(document).ready(function(){
             }
         );
         return;
-    }
-  }); 
+  });
   
 }); 
 </script>

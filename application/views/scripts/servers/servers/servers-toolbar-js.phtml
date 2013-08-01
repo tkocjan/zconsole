@@ -1,4 +1,5 @@
     <script>
+        $("#servers_new").on('click', function() {location.assign('<?=$app_path?>/servers/create')});
         $("#servers_refresh").on('click', function() {window.location.reload(true);} );
 
         $("#servers_help").on('click', function() {myLayout.toggle('east');});
@@ -9,18 +10,18 @@
         $("#servers_clone").on('click', loadCloneDialog);
         $("#servers_delete").on('click', function () {deleteServers(selServerIds);});
 
-        $("#servers_new").button({ icons: {primary: "ui-icon-document"} });
-        $("#servers_manage").button({ icons: {primary: "ui-icon-gear"} });
-        $("#servers_start").button({ icons: {primary: "ui-icon-play"} });
-        $("#servers_stop").button({ icons: {primary: "ui-icon-stop"} });
-        $("#servers_restart").button({ icons: {primary: "ui-icon-refresh"} });
-        $("#servers_delete").button({ icons: {primary: "ui-icon-trash"} });
-        $("#servers_clone").button({ icons: {primary: "ui-icon-copy"} });
-        $("#servers_filter").button({ icons: {primary: "ui-icon-search"} });
-        $("#servers_refresh").button({ icons: {primary: "ui-icon-refresh"} });
-        $("#servers_help").button({ icons: {primary: "ui-icon-help"} });
+        //$("#servers_new").button({ icons: {primary: "ui-icon-document"} });
+        //$("#servers_manage").button({ icons: {primary: "ui-icon-gear"} });
+        //$("#servers_start").button({ icons: {primary: "ui-icon-play"} });
+        //$("#servers_stop").button({ icons: {primary: "ui-icon-stop"} });
+        //$("#servers_restart").button({ icons: {primary: "ui-icon-refresh"} });
+        //$("#servers_delete").button({ icons: {primary: "ui-icon-trash"} });
+        //$("#servers_clone").button({ icons: {primary: "ui-icon-copy"} });
+        //$("#servers_filter").button({ icons: {primary: "ui-icon-search"} });
+        //$("#servers_refresh").button({ icons: {primary: "ui-icon-refresh"} });
+        //$("#servers_help").button({ icons: {primary: "ui-icon-help"} });
 
-        $(".default_off").button("disable");
+        //$(".default_off").button("disable");
         
         function loadCloneDialog() {
             console.log("loadCloneDialog: entry");
@@ -31,7 +32,20 @@
             );
         }
         
-        function setServerToolbarState(selServerIds, status) {
+        //jqGrid selServerIdsChanged listener
+        $(document).on("selServerIdsChange", function(e) {
+            if (selServerIds.length > 0) {
+                var selRow = myGrid.jqGrid('getRowData', selServerIds[0]);
+                console.log("search = " + selRow['status'].search('Running') );
+                // text search the cell
+                if (selRow['status'].search('Running') >= 0) {
+                    status = 'Running';
+                }
+                else {
+                    status = 'Stopped';
+                }
+            }
+            console.log("status = " + status );
             var uri = '<?=$app_path?>/servers';
             $.each(selServerIds, function(index, serverId) {
                 if (index == 0)
@@ -64,6 +78,6 @@
             }
             
             return;
-        }
-
+        });
+        
     </script>

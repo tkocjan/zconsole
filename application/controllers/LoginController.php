@@ -53,7 +53,7 @@ class LoginController extends Zend_Controller_Action {
         //setcookie('userEmail', $userRec->email,  time()+60*60*24*365);
         
         //$this->redirect('/', array('prependBase' => true));
-        $this->redirect('');
+        $this->redirect('/servers');
     }
     
     public function logoutAction() {

@@ -1,5 +1,5 @@
     <script>            
-        var selServerId = <?=$viewData->serverRec->id?>;
+        selServerId = <?=$viewData->serverRec->id?>;
         
         $("#servers_refresh").on('click', function() {location.reload(true);});
         $("#servers_help").on('click', function() {myLayout.toggle('east');});
@@ -9,7 +9,7 @@
         $("#servers_restart").on('click', function() {startStopServer(<?=$viewData->serverRec->id?>, "Restart")} );
         
         $("#servers_clone").on('click', loadCloneDialog);
-        $("#servers_delete").on('click', function () {deleteServers([selServerId]);}); //pass array
+        $("#servers_delete").on('click', function () {deleteServers(selServerIds);}); //pass array
         
         $("#servers_close").button({ icons: {primary: "ui-icon-close"} });
         //$("#servers_manage").button({ icons: {primary: "ui-icon-gear"} });

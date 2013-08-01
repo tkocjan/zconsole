@@ -1,21 +1,37 @@
     <div class="toolbar">
         <div class="left">
             <a id="servers_new" class="servers_toolbar" 
-               href="<?=$app_path?>/servers/create">New</a>
+               data-ui="button" data-ui-icons="{primary: 'ui-icon-document'}"
+               href="#">New</a>
             <a id="servers_manage" class="servers_toolbar default_off single_on" 
-               href="#">Manage</a>
-            <a id="servers_start" class="servers_toolbar default_off stopped_on" href="#">Start</a>
-            <a id="servers_stop" class="servers_toolbar default_off running_on" href="#">Stop</a>
-            <a id="servers_restart" class="servers_toolbar default_off running_on" href="#">Restart</a>
+               data-ui="button" data-ui-icons="{primary: 'ui-icon-gear'}"
+               data-ui-disabled="true" href="#">Manage</a>
+            <a id="servers_start" class="servers_toolbar default_off stopped_on" 
+               data-ui="button" data-ui-icons="{primary: 'ui-icon-play'}"
+               data-ui-disabled="true" href="#">Start</a>
+            <a id="servers_stop" class="servers_toolbar default_off running_on" 
+               data-ui="button" data-ui-icons="{primary: 'ui-icon-stop'}"
+               data-ui-disabled="true" href="#">Stop</a>
+            <a id="servers_restart" class="servers_toolbar default_off running_on" 
+               data-ui="button" data-ui-icons="{primary: 'ui-icon-refresh'}"
+               data-ui-disabled="true" href="#">Restart</a>
             <a id="servers_delete" class="servers_toolbar default_off single_on" 
-               href="#">Delete</a>
+               data-ui="button" data-ui-icons="{primary: 'ui-icon-trash'}"
+               data-ui-disabled="true" href="#">Delete</a>
             <a id="servers_clone" class="servers_toolbar default_off single_on" 
-               href="#">Clone</a>
+               data-ui="button" data-ui-icons="{primary: 'ui-icon-copy'}"
+               data-ui-disabled="true" href="#">Clone</a>
         </div>
         <div class="right">
-            <a id="servers_filter" class="servers_toolbar default_off" href="#">Filter</a>
-            <a id="servers_refresh" class="servers_toolbar" href="#">Refresh</a>
-            <a id="servers_help" class="servers_toolbar" href="#">Help</a>
+            <a id="servers_filter" class="servers_toolbar default_off" 
+               data-ui="button" data-ui-icons="{primary: 'ui-icon-search'}"
+               data-ui-disabled="true" href="#">Filter</a>
+            <a id="servers_refresh" class="servers_toolbar" 
+               data-ui="button" data-ui-icons="{primary: 'ui-icon-refresh'}"
+               href="#">Refresh</a>
+            <a id="servers_help" class="servers_toolbar" 
+               data-ui="button" data-ui-icons="{primary: 'ui-icon-help'}"
+               href="#">Help</a>
         </div>
         <div class="clear"></div>
     </div>
