@@ -34,7 +34,7 @@ $paging->sord = $sord;
 $serverRecs = $domainService->findManyBy(
     'ServerRec', array('customerId'=>$customerId), $paging, true);
 
-$logger->debug( 'getServersGrid: serverRecs='.print_r($serverRecs, true) );
+$logger->info( 'getServersGrid: serverRecs='.print_r($serverRecs, true) );
 
 // we should set the appropriate header information. Do not forget this.
 //ob_end_clean();

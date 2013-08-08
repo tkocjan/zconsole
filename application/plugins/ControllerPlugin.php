@@ -2,17 +2,23 @@
 class Application_Plugin_ControllerPlugin extends Zend_Controller_Plugin_Abstract
 {    
     public function routeShutdown(Zend_Controller_Request_Abstract $req) {
+        Logger::info(__METHOD__.': entry');
+        
         $this->checkAuth($req);
     }
 
-    /*
     public function preDispatch(Zend_Controller_Request_Abstract $req) {
+        Logger::info(__METHOD__.
+            'Request: module='.$req->getModuleName().
+            ' controller='.$req->getControllerName().
+            ' action='.$req->getActionName()
+        );
+
         //$this->setupHelpFilePre($req);
     }
-     * 
-     */
 
     public function postDispatch(Zend_Controller_Request_Abstract $req) {
+        Logger::info(__METHOD__.': entry');
         $this->setupUserEmail($req);
         $this->setupHelpFile($req);
         //$view->activeLink is unset
@@ -21,8 +27,13 @@ class Application_Plugin_ControllerPlugin extends Zend_Controller_Plugin_Abstrac
     protected function checkAuth(Zend_Controller_Request_Abstract $req) {
         include PORTABLE_METHOD;
         
-        if (!DO_AUTH)
+        Logger::info(__METHOD__.': entry');
+        
+        if (!DO_AUTH) {
+            $ns = new Zend_Session_Namespace('Default');
+            $ns->userId = 1;
             return;
+        }
         
         //Logger::info(__METHOD__.': action='.$req->getActionName());
         
@@ -40,13 +51,20 @@ class Application_Plugin_ControllerPlugin extends Zend_Controller_Plugin_Abstrac
     public function setupUserEmail(Zend_Controller_Request_Abstract $req) {
         include PORTABLE_METHOD;
         
+        Logger::info(__METHOD__.': entry');
+        Logger::info(__METHOD__.': header: '.headers_sent($file, $line) );
+        Logger::info(__METHOD__.': file: '.$file);
+        Logger::info(__METHOD__.': line: '.$line);
         $ns = new Zend_Session_Namespace('Default');
         $view =  Zend_Layout::getMvcInstance()->getView();
         $view->userEmail = $ns->userEmail;
+        Logger::info(__METHOD__.': exit');
     }
     
     public function setupHelpFile(Zend_Controller_Request_Abstract $req) {
         include PORTABLE_METHOD;
+        
+        Logger::info(__METHOD__.': entry');
         
         //find if -help.phtml file exists and put full path in 
         //  $view->helpPath for layout to access, 

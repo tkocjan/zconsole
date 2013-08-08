@@ -10,7 +10,7 @@ $(document).ready(function () {
         north__closable: false,
         north__allowOverflow: true,        
         north__showOverflowOnHover: true,
-        north__size: 75,
+        //north__size: 75,
  
         south__resizable: false,                    
         south__closable: false,

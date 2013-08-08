@@ -4,7 +4,7 @@
 </div>
 <div id="user_settings" style="margin: 10px;">
     <a href="<?=$app_path?>/login" title="English"><img alt="Us" src="<?=$app_images->flagIconPath?>/us.png"></a>
-    <a href="<?=$app_path?>/es/login" title="Spanish"><img alt="Es" src="<?=$app_images->flagIconPath?>/es.png"></a>
+    <a href="#" xhref="<?=$app_path?>/es/login" title="Spanish"><img alt="Es" src="<?=$app_images->flagIconPath?>/es.png"></a>
 </div>
 <div id="loginPageWrapper">
     <div id="loginPageHeader"><h1><?=SERVICE_NAME?> Cloud Hosting</h1></div>
@@ -15,16 +15,16 @@
                 Log in with an external provider (click on its logo)
             </div>
             <div class="login_row" style="text-align: center;">
-                <a href="<?=$app_path ?>/auth/facebook">
+                <a href="#" xhref="<?=$app_path ?>/auth/facebook">
                     <img alt="Facebook" src="<?=$app_images->authPath?>/facebook_64.png" 
                          title="Facebook"></a>
-                <a href="<?=$app_path ?>/auth/google">
+                <a href="#" xhref="<?=$app_path ?>/auth/google">
                     <img alt="Google" src="<?=$app_images->authPath?>/google_64.png" 
                          title="Google"></a>
-                <a href="<?=$app_path ?>/auth/yahoo">
+                <a href="#" xhref="<?=$app_path ?>/auth/yahoo">
                     <img alt="Yahoo" src="<?=$app_images->authPath?>/yahoo_64.png" 
                          title="Yahoo"></a>
-                <a href="<?=$app_path ?>/auth/github">
+                <a href="#" xhref="<?=$app_path ?>/auth/github">
                     <img alt="Github" src="<?=$app_images->authPath?>/github_64.png" 
                          title="Github"></a>
             </div>
@@ -36,12 +36,12 @@
             <form accept-charset="UTF-8" action="<?=$app_path?>/login/sign-in" class="new_user" id="new_user" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="415gLXHKqKSQj5OfIGeV3RYA/zWwRKtvYPG/fd9uajk=" type="hidden"></div>
                 <div class="login_row">
                     <div class="login-label"><label for="user_email">Email</label></div>
-                    <div class="login-input"><input id="user_email" name="user[email]" size="30" value="<?=$viewData->email?>" type="text"></div>
+                    <div class="login-input"><input id="user_email" name="user[email]" size="30" value="tkocjan@yahoo.com" xvalue="<?=$viewData->email?> type="text"></div>
                 </div>
                 <div class="clear"></div>
                 <div class="login_row">
                     <div class="login-label"><label for="user_password">Password</label></div>
-                    <div class="login-input"><input id="user_password" name="user[password]" size="30" type="password"></div>
+                    <div class="login-input"><input id="user_password" name="user[password]" value="password" size="30" type="password"></div>
                 </div>
                 <div class="clear"></div>
                 <div class="center">
@@ -55,11 +55,11 @@
         <div class="clear"></div>
         <p style="text-align: center;">
             Don't have an account?
-            <a href="<?=SERVICE_URL?>/cloud/signup">Sign Up for one</a>.
+            <a href="#" xhref="<?=SERVICE_URL?>/cloud/signup">Sign Up for one</a>.
             Forgot your password?
-            <a href="<?=$app_path?>/password/new">Recover it</a>.
+            <a href="#" xhref="<?=$app_path?>/password/new">Recover it</a>.
             Never received activation link?
-            <a href="<?=$app_path?>/invitations/resend">Resend it</a>
+            <a href="#" xhref="<?=$app_path?>/invitations/resend">Resend it</a>
         </p>
         <p style="text-align: center;">
             By logging in with an external provider I acknowledge that I have read and accepted the <?=SERVICE_NAME?> Cloud Hosting <a href="<?=SERVICE_URL?>" target="_blank">Terms of Use</a>.

@@ -34,6 +34,7 @@
         
         //jqGrid selServerIdsChanged listener
         $(document).on("selServerIdsChange", function(e) {
+            // get running status of 1st row
             if (selServerIds.length > 0) {
                 var selRow = myGrid.jqGrid('getRowData', selServerIds[0]);
                 console.log("search = " + selRow['status'].search('Running') );
@@ -46,6 +47,8 @@
                 }
             }
             console.log("status = " + status );
+            
+            //set uri of refresh button
             var uri = '<?=$app_path?>/servers';
             $.each(selServerIds, function(index, serverId) {
                 if (index == 0)
@@ -58,9 +61,11 @@
             console.log("uri="+uri);
             $("#servers_refresh").attr("href", uri);
 
+            //disable buttons that default to off
             $(".default_off").button("disable");
             //$("#servers_filter").button("enable");
             
+            //enable buttons that should be on
             if (selServerIds.length == 0)
                 return;
             

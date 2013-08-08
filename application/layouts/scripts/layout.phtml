@@ -55,15 +55,16 @@ jWaiting(
         <div id="user_settings">
             <a title="English" href="<?=$app_path?>/servers">
                 <img src="<?=$app_images->flagIconPath?>/us.png" alt="Us"></a>
-            <a title="Spanish" href="<?=$app_path?>/es/servers">
+            <a title="Spanish" href="#" xhref="<?=$app_path?>/es/servers">
                 <img src="<?=$app_images->flagIconPath?>/es.png" alt="Es"></a>
             |
             <b>Welcome, <?=$this->userEmail?></b>
             |
             <a rel="nofollow" data-method="delete" href="<?=$app_path?>/login/logout">Sign Out</a>
         </div>
+        <!--
         <br />
-        <?php include 'top-menu.phtml'; ?> 
+        <!--?php include 'top-menu.phtml'; ?-->
         
         <!-- div id="status" class="ui-corner-bottom">
             Please wait...
